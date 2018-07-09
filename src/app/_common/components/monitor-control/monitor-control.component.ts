@@ -15,7 +15,7 @@ export class MonitorControlComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.timerText$ = this.timerService.running$.map(running => running ? 'pause' : 'start');
+    this.timerText$ = this.timerService.running$.map(running => running ? 'stop' : 'start');
   }
 
   toggleTimer() {

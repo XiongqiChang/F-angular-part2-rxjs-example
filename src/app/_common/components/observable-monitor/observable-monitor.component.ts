@@ -3,7 +3,7 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as _ from 'lodash';
-import { TimerService } from '../../services/timer.service';
+import { TimerService, START_SIGN } from '../../services/timer.service';
 
 @Component({
   selector: 'observable-monitor',
@@ -33,6 +33,10 @@ export class ObservableMonitorComponent implements OnInit {
   }
 
   concatValues(accumulator, value) {
+    if (value === START_SIGN) {
+      return [];
+    }
+
     const values = accumulator.concat(value);
     return _.filter(values, _.isNull).length > 500 ? values.slice(1) : values;
   }
