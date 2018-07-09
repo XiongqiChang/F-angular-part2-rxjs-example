@@ -1,0 +1,38 @@
+@import '~bootstrap/scss/_mixins';
+
+@mixin user-group-font {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+@mixin button-large {
+  width: 174px;
+  height: 36px;
+  border-radius: 2px;
+}
+
+@mixin button-middle {
+  width: 146px;
+  height: 32px;
+  display: inline-block;
+  text-decoration: none;
+  line-height: 32px;
+  text-align: center;
+  font-size: 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  letter-spacing: 3px;
+}
+
+@mixin group-count-font {
+  font-size: 24px;
+  font-weight: bold;
+  vertical-align: sub;
+  text-align: right;
+}
+
+@mixin text-ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

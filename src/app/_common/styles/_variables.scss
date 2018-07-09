@@ -1,0 +1,81 @@
+$white: #fff;
+$black: #000;
+$gray-a: #eee;
+$blue: #00ADEF;
+$blue-dark: #0198D4;
+$blue-darkest: #0079A9;
+$lake-blue: #02adf0;
+$red: #E84522;
+$green: #7ED321;
+$green-bg: #13CFA5;
+$orange: #F5A623;
+$price-green: #14CFA5;
+$gray-little-darkest: #666;
+$gray-little-darker: #9B9B9B;
+$gray-dim: #333;
+$gray-darkest: #1D2439;
+$gray-darker: #364760;
+$gray-dark: #999;
+$gray-light: #EEF1F7;
+$gray-lighter: #E6E6E6;
+$gray-lightest: #F7FAFC;
+$text-muted: #80899C;
+$light-peach: #FFD7CF;
+$light-blue: #D6F4FF;
+$dark-blue: #566979;
+$selected-color: #FFF3B8;
+$gray-brown: #4A4A4A;
+$border-gray-light: #E9E9E9;
+$white-smoke: #F4F4F4;
+
+$brand-primary: $blue;
+$brand-danger: $red;
+$brand-success: $green;
+$brand-warning: $orange;
+
+$link: $dark-blue;
+$breadcrumb-active-color: $text-muted;
+$breadcrumb-divider-color: $text-muted;
+
+$table-line-height: 40px;
+$header-height: 60px;
+$footer-height: 28px;
+$content-height: calc(100vh - #{$header-height});
+$content-height-without-footer: calc(100vh - #{$header-height} - 28px);
+$border-radius: 2px;
+$border-radius-sm: 2px;
+$border-radius-lg: 2px;
+$tab-height: 42px;
+
+// 大字体优先使用微软雅黑
+$font-family-sans-serif: '微软雅黑', "Microsoft Yahei", 'Hiragino Sans GB', Helvetica, Arial, sans-serif;
+// 英文和数字的字体优先使用细体字
+$font-family-serif: 'Open Sans', '微软雅黑', "Microsoft Yahei", "Hiragino Sans GB", "Helvetica Neue", Helvetica, serif;
+
+$font-size-root: 12px;
+
+$font-sm: 12px;
+$font-md: 16px;
+
+$font-color-primary: $gray-dim;
+$font-color-secondary: #979797;
+
+$btn-primary-bg: $blue;
+$btn-primary-hover: $blue-dark;
+$btn-primary-active: $blue-darkest;
+$btn-success-bg: #13CFA5;
+$btn-success-hover: #11B994;
+$btn-default-bg: #D7DCE5;
+$btn-default-hover: #CCD1DA;
+$btn-danger-bg: #FE0042;
+$btn-danger-hover: #CB0035;
+$btn-disable: #9B9B9B;
+$error-message: $red;
+$error-bg: $light-peach;
+$disable-background: #F9F9F9;
+$top-z-index: 9999;
+$warning-bg: #FFF5C1;
+$warning-text: #C46F0D;
+$question-circle: #979797;
+
+@import '~bootstrap/scss/_variables';

@@ -1,0 +1,39 @@
+:host {
+  display: block;
+  padding: 8px 0;
+}
+
+.value-monitor {
+  height: 66px;
+  padding: 8px 0;
+  position: relative;
+  font-size: 0;
+
+  .value {
+    position: absolute;
+    top: 9px;
+    height: 24px;
+    padding: 2px 12px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    transform: translateX(-50%);
+    background: #fff;
+    font-size: 12px;
+  }
+
+  .value + .value {
+    top: 21px;
+  }
+
+  .value + .value + .value {
+    top: 33px;
+  }
+
+  .time {
+    font-size: 12px;
+    vertical-align: text-bottom;
+  }
+}

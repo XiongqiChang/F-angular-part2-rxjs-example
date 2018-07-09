@@ -1,0 +1,164 @@
+/* stylelint-disable */
+@import "variables";
+
+.input-group.input-group-clear {
+  > .input-group-addon {
+    background: none;
+    border: none;
+    color: white;
+  }
+  > .form-control {
+    background: none;
+    border: none;
+    color: white;
+  }
+  border-bottom: 1px solid white;
+}
+
+.form-control:focus {
+  color: #000;
+}
+
+.btn-primary {
+  background-color: #55C8EA;
+}
+
+.btn-primary:hover {
+  background-color: #51BEDE;
+}
+
+.btn-success {
+  background-color: #13CFA5;
+}
+
+.btn-success:hover {
+  background-color: #11B994;
+}
+
+.btn-default {
+  color: $gray-darker;
+  background-color: #D7DCE5;
+}
+
+.btn-default:hover {
+  background-color: #CCD1DA;
+}
+
+.btn {
+  border-radius: 3px;
+  font-weight: bold;
+
+  &:hover {
+    outline: none;
+    outline-offset: -0;
+  }
+  &:active {
+    outline: none;
+    outline-offset: -0;
+  }
+  &:focus {
+    outline: none;
+    outline-offset: -0;
+  }
+  &:active:hover {
+    outline: none;
+    outline-offset: -0;
+  }
+  &:active:focus {
+    outline: none;
+    outline-offset: -0;
+  }
+}
+
+.btn-primary {
+  background-color: $btn-primary-bg;
+  &:hover {
+    background-color: $btn-primary-hover;
+  }
+  &:active {
+    background-color: $btn-primary-active;
+  }
+  &:focus {
+    background-color: $btn-primary-hover;
+  }
+  &:active:hover {
+    background-color: $btn-primary-hover;
+  }
+  &:active:focus {
+    background-color: $btn-primary-hover;
+    border: none;
+  }
+}
+
+.btn-success {
+  background-color: $btn-success-bg;
+  &:hover {
+    background-color: $btn-success-hover;
+  }
+  &:active {
+    background-color: $btn-success-hover;
+  }
+  &:focus {
+    background-color: $btn-success-hover;
+  }
+  &:active:hover {
+    background-color: $btn-success-hover;
+  }
+  &:active:focus {
+    background-color: $btn-success-hover;
+  }
+}
+
+.btn-default {
+  color: $gray-dark;
+  background-color: $btn-default-bg;
+  &:hover {
+    background-color: $btn-default-hover;
+  }
+  &:active {
+    background-color: $btn-default-hover;
+  }
+  &:focus {
+    background-color: $btn-default-hover;
+  }
+  &:active:hover {
+    background-color: $btn-default-hover;
+  }
+  &:active:focus {
+    background-color: $btn-default-hover;
+  }
+}
+
+.btn-danger {
+  color: $gray-dark;
+  background-color: $btn-danger-bg;
+  &:hover {
+    background-color: $btn-danger-hover;
+  }
+  &:active {
+    background-color: $btn-danger-hover;
+  }
+  &:focus {
+    background-color: $btn-danger-hover;
+  }
+  &:active:hover {
+    background-color: $btn-danger-hover;
+    border-color: $btn-danger-hover;
+  }
+  &:active:focus {
+    background-color: $btn-danger-hover;
+  }
+}
+
+.page-item.disabled .page-link {
+  color: #C1C1C1;
+}
+
+@media (min-width: 720px) {
+  .modal-dialog {
+    max-width: 800px;
+    margin: 30px auto;
+  }
+}
+
+/* stylelint-enable */
