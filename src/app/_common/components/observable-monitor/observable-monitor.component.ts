@@ -13,10 +13,12 @@ import { TimerService } from '../../services/timer.service';
 })
 export class ObservableMonitorComponent implements OnInit {
   @Input() title: string;
+  @Input() breakable: boolean = false;
   @Input() observable: Observable<any>;
   subject$: Subject<any>;
   monitor$: Observable<any[]>;
   observing$: BehaviorSubject<boolean>;
+  buttonText$: Observable<string>;
 
   constructor(private timerService: TimerService) {
     this.subject$ = new Subject();
@@ -27,6 +29,7 @@ export class ObservableMonitorComponent implements OnInit {
     const merged$ = this.subject$.merge(this.timerService.timer$.mapTo(null));
     this.monitor$ = this.timerService.windowToggle(merged$)
       .scan(this.concatValues, []);
+    this.buttonText$ = this.observing$.map(observing => this.breakable && observing ? 'break' : 'observe');
   }
 
   concatValues(accumulator, value) {
@@ -36,15 +39,15 @@ export class ObservableMonitorComponent implements OnInit {
 
   observe() {
     if (this.observing$.value) {
-      return;
+      return this.breakable && this.observing$.next(false);
     }
 
-    this.observable.subscribe({
-      next: value => {
-        this.subject$.next(value);
-        this.observing$.next(true);
-      },
-      complete: () => this.observing$.next(false),
-    });
+    this.observing$.next(true);
+    this.observable
+      .takeUntil(this.observing$.filter(observing => !observing))
+      .subscribe({
+        next: value => this.subject$.next(value),
+        complete: () => this.observing$.next(false),
+      });
   }
 }

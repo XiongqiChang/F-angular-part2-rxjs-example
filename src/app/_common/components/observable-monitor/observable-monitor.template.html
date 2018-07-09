@@ -1,5 +1,5 @@
 <h3>{{title}}</h3>
-<button (click)="observe()" [disabled]="observing$ | async">observe</button>
+<button (click)="observe()" [disabled]="!breakable && (observing$ | async)">{{buttonText$ | async}}</button>
 <span>value: {{subject$ | async}}</span>
 <div class="value-monitor">
   <template ngFor let-value [ngForOf]="monitor$ | async">
