@@ -19,6 +19,7 @@ export class ObservableMonitorComponent implements OnInit {
   monitor$: Observable<any[]>;
   observing$: BehaviorSubject<boolean>;
   buttonText$: Observable<string>;
+  buttonDisabled$: Observable<boolean>;
 
   constructor(private timerService: TimerService) {
     this.subject$ = new Subject();
@@ -26,10 +27,10 @@ export class ObservableMonitorComponent implements OnInit {
   }
 
   ngOnInit() {
-    const merged$ = this.subject$.merge(this.timerService.timer$.mapTo(null));
-    this.monitor$ = this.timerService.windowToggle(merged$)
-      .scan(this.concatValues, []);
+    this.monitor$ = this.subject$.merge(this.timerService.timer$).scan(this.concatValues, []);
     this.buttonText$ = this.observing$.map(observing => this.breakable && observing ? 'break' : 'observe');
+    this.buttonDisabled$ = Observable.combineLatest(this.observing$, this.timerService.running$)
+      .map(([observing, running]) => !running || (observing && !this.breakable))
   }
 
   concatValues(accumulator, value) {
@@ -48,7 +49,10 @@ export class ObservableMonitorComponent implements OnInit {
 
     this.observing$.next(true);
     this.observable
-      .takeUntil(this.observing$.filter(observing => !observing))
+      .takeUntil(Observable.merge(
+        this.observing$.filter(observing => !observing),
+        this.timerService.running$.filter(running => !running),
+      ))
       .subscribe({
         next: value => this.subject$.next(value),
         complete: () => this.observing$.next(false),

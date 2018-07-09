@@ -1,29 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 export const START_SIGN = 'START_SIGN';
 
 @Injectable()
 export class TimerService {
-  timer$: Observable<number>;
+  timer$: Subject<any>;
   running$: BehaviorSubject<boolean>;
 
   constructor() {
-    this.running$ = new BehaviorSubject(true);
-    this.timer$ = Observable.interval(100);
+    this.running$ = new BehaviorSubject(false);
+    this.timer$ = new Subject();
   }
 
   toggle(): void {
-    this.running$.next(!this.running$.value);
-  }
+    if (this.running$.value) {
+      return this.running$.next(false);
+    }
 
-  windowToggle(observable: Observable<any>): Observable<any> {
-    return observable
-      .windowToggle(
-        this.running$.filter(running => running),
-        () => Observable.never().takeUntil(this.running$.filter(running => !running)))
-      .map(windowed => windowed.startWith(START_SIGN))
-      .mergeAll();
+    this.timer$.next(START_SIGN);
+    this.running$.next(true);
+    Observable.timer(0, 100).mapTo(null)
+      .takeUntil(this.running$.filter(running => !running))
+      .subscribe(value => this.timer$.next(value));
   }
 }
