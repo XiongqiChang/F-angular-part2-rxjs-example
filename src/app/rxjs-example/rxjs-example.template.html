@@ -1,3 +1,3 @@
-<button (click)="toggleTimer()">{{timerText$ | async}}</button>
-
-<observable-monitor [observable]="observable$"></observable-monitor>
+<monitor-control></monitor-control>
+<observable-monitor title="observable1" [observable]="observable$"></observable-monitor>
+<observable-monitor title="observable2" [observable]="observable$"></observable-monitor>

@@ -9,14 +9,14 @@ export class TimerService {
 
   constructor() {
     this.running$ = new BehaviorSubject(false);
-    this.timer$ = this.windowToggle(Observable.interval(100));
+    this.timer$ = Observable.interval(100);
   }
 
   toggle(): void {
     this.running$.next(!this.running$.value);
   }
 
-  windowToggle(observable: Observable<T>): Observable<T> {
+  windowToggle(observable: Observable<any>): Observable<any> {
     return observable
       .windowToggle(
         this.running$.filter(running => running),

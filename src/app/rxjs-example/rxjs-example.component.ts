@@ -1,6 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { TimerService } from '../_common/services/timer.service';
 
 @Component({
   selector: 'rxjs-example',
@@ -8,11 +7,10 @@ import { TimerService } from '../_common/services/timer.service';
   styleUrls: ['./rxjs-example.style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RxJSExampleComponent implements OnInit {
+export class RxJSExampleComponent {
   observable$: Observable<any>;
-  timerText$: Observable<string>;
 
-  constructor(private timerService: TimerService) {
+  constructor() {
     this.observable$ = Observable.create(observer => {
       observer.next(1);
       observer.next(2);
@@ -22,13 +20,5 @@ export class RxJSExampleComponent implements OnInit {
         observer.complete();
       }, 1500);
     });
-  }
-
-  ngOnInit() {
-    this.timerText$ = this.timerService.running$.map(running => running ? 'pause' : 'start');
-  }
-
-  toggleTimer() {
-    this.timerService.toggle();
   }
 }
