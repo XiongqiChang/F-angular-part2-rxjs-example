@@ -1,7 +1,7 @@
 <button (click)="subscribe()">sub</button>
 <span>value: {{subject$ | async}}</span>
 <div class="value-monitor">
-  <template ngFor let-value [ngForOf]="values$ | async">
+  <template ngFor let-value [ngForOf]="monitor$ | async">
     <span class="value" *ngIf="value !== null">{{value}}</span>
     <span class="time" *ngIf="value === null">.</span>
   </template>

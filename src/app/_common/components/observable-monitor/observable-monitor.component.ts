@@ -13,14 +13,15 @@ import { TimerService } from '../../services/timer.service';
 export class ObservableMonitorComponent implements OnInit {
   @Input() observable: Observable<any>;
   subject$: Subject<any>;
-  values$: Observable<any[]>;
+  monitor$: Observable<any[]>;
 
   constructor(private timerService: TimerService) {
     this.subject$ = new Subject();
   }
 
   ngOnInit() {
-    this.values$ = this.subject$.merge(this.timerService.timer$.mapTo(null))
+    this.monitor$ = this.timerService.windowToggle(this.subject$)
+      .merge(this.timerService.timer$.mapTo(null))
       .scan(this.concatValues, []);
   }
 
