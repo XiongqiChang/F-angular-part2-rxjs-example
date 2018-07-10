@@ -66,7 +66,7 @@ export class ObservableMonitorComponent implements OnInit {
           this.timerService.running$.filter(running => !running),
         ))
         .do({
-          next: value => this.subject$.next(value),
+          next: value => this.subject$.next(JSON.stringify(value)),
           error: error => {
             this.subject$.next(error);
             this.status$.next(MONITOR_TYPE.ERROR);
