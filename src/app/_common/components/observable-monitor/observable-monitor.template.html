@@ -3,7 +3,10 @@
 <span>value: {{subject$ | async}}</span>
 <div class="value-monitor">
   <template ngFor let-value [ngForOf]="monitor$ | async">
-    <span class="value" *ngIf="value !== null">{{value}}</span>
-    <span class="time" *ngIf="value === null">.</span>
+    <span class="value" *ngIf="value?.type === monitorType.VALUE">{{value.value}}</span>
+    <span class="time" *ngIf="value?.type === monitorType.TIMER"
+          [class.subscribe]="value.status === monitorType.SUBSCRIBE"
+          [class.unsubscribe]="value.status === monitorType.UNSUBSCRIBE"
+          [class.complete]="value.status === monitorType.COMPLETE">.</span>
   </template>
 </div>

@@ -3,14 +3,13 @@
 }
 
 .value-monitor {
-  height: 66px;
   padding: 8px 0;
   position: relative;
   font-size: 0;
 
   .value {
     position: absolute;
-    top: 9px;
+    top: 10px;
     height: 24px;
     padding: 2px 12px;
     display: inline-block;
@@ -24,15 +23,34 @@
   }
 
   .value + .value {
-    top: 21px;
+    top: 22px;
   }
 
   .value + .value + .value {
-    top: 33px;
+    top: 34px;
   }
 
   .time {
-    font-size: 12px;
-    vertical-align: text-bottom;
+    color: #999;
+    height: 52px;
+    display: inline-block;
+    font-size: 9px;
+    font-weight: bold;
+    line-height: 24px;
+
+    &.subscribe {
+      color: #856404;
+      background: #fff3cd;
+    }
+
+    &.unsubscribe {
+      color: #721c24;
+      background: #f8d7da;
+    }
+
+    &.complete {
+      color: #155724;
+      background: #d4edda;
+    }
   }
 }
