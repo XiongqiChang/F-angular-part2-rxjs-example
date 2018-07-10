@@ -19,7 +19,7 @@ enum MONITOR_TYPE {
 })
 export class ObservableMonitorComponent implements OnInit {
   @Input() name: string;
-  @Input() autoSub: number = 0;
+  @Input() autoSub: number;
   @Input() breakable: boolean = true;
   @Input() observable: Observable<any>;
   subject$: Subject<any>;
@@ -67,7 +67,9 @@ export class ObservableMonitorComponent implements OnInit {
         .do({
           next: value => this.subject$.next(value),
           complete: () => {
-            this.status$.next(MONITOR_TYPE.COMPLETE);
+            if (this.timerService.running$.value) {
+              this.status$.next(MONITOR_TYPE.COMPLETE);
+            }
             this.status$.next(null);
           },
         }))
@@ -75,7 +77,7 @@ export class ObservableMonitorComponent implements OnInit {
   }
 
   initAutoSub() {
-    if (this.autoSub > 0) {
+    if (_.isNumber(this.autoSub)) {
       this.timerService.running$
         .filter(running => running)
         .delay(this.autoSub * 1000)

@@ -3,6 +3,7 @@
 }
 
 .value-monitor {
+  height: 68px;
   padding: 8px 0;
   position: relative;
   font-size: 0;
@@ -20,6 +21,9 @@
     transform: translateX(-50%);
     background: #fff;
     font-size: 12px;
+    max-width: 64px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .value + .value {
