@@ -18,9 +18,9 @@ enum MONITOR_TYPE {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ObservableMonitorComponent implements OnInit {
-  @Input() title: string;
+  @Input() name: string;
   @Input() autoSub: number = 0;
-  @Input() breakable: boolean = false;
+  @Input() breakable: boolean = true;
   @Input() observable: Observable<any>;
   subject$: Subject<any>;
   monitor$: Observable<any[]>;
@@ -92,8 +92,7 @@ export class ObservableMonitorComponent implements OnInit {
         return accumulator.map(node => node.status === MONITOR_TYPE.SUBSCRIBE ? { ...node, status: this.status$.value } : node);
       case MONITOR_TYPE.TIMER:
       case MONITOR_TYPE.VALUE:
-        const values = accumulator.concat({ type, value, status: this.status$.value });
-        return _.filter(values, { type: MONITOR_TYPE.TIMER }).length > 500 ? values.slice(1) : values;
+        return accumulator.concat({ type, value, status: this.status$.value });
       default:
         return accumulator;
     }
