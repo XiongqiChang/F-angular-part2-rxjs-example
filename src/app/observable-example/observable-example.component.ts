@@ -15,6 +15,7 @@ export class ObservableExampleComponent {
   timer$: Observable<number>;
   fromEvent$: Observable<any>;
   create$: Observable<any>;
+  error$: Observable<any>;
 
   constructor() {
     this.of$ = Observable.of('o');
@@ -30,6 +31,9 @@ export class ObservableExampleComponent {
         observer.next(3);
         observer.complete();
       }, 1000);
+    });
+    this.error$ = Observable.create(observer => {
+      setTimeout(() => observer.error('some error'), 3000);
     });
   }
 }

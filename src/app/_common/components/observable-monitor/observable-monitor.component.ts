@@ -8,7 +8,8 @@ import { TimerService } from '../../services/timer.service';
 enum MONITOR_TYPE {
   START, STOP,
   TIMER, VALUE,
-  SUBSCRIBE, UNSUBSCRIBE, COMPLETE,
+  SUBSCRIBE, UNSUBSCRIBE,
+  COMPLETE, ERROR,
 }
 
 @Component({
@@ -66,6 +67,11 @@ export class ObservableMonitorComponent implements OnInit {
         ))
         .do({
           next: value => this.subject$.next(value),
+          error: error => {
+            this.subject$.next(error);
+            this.status$.next(MONITOR_TYPE.ERROR);
+            this.status$.next(null);
+          },
           complete: () => {
             if (this.timerService.running$.value) {
               this.status$.next(MONITOR_TYPE.COMPLETE);
@@ -89,6 +95,7 @@ export class ObservableMonitorComponent implements OnInit {
     switch (type) {
       case MONITOR_TYPE.START:
         return [];
+      case MONITOR_TYPE.ERROR:
       case MONITOR_TYPE.COMPLETE:
       case MONITOR_TYPE.UNSUBSCRIBE:
         return accumulator.map(node => node.status === MONITOR_TYPE.SUBSCRIBE ? { ...node, status: this.status$.value } : node);

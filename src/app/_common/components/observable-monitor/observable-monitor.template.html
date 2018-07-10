@@ -7,6 +7,7 @@
     <span class="time" *ngIf="value?.type === monitorType.TIMER"
           [class.subscribe]="value.status === monitorType.SUBSCRIBE"
           [class.unsubscribe]="value.status === monitorType.UNSUBSCRIBE"
-          [class.complete]="value.status === monitorType.COMPLETE">.</span>
+          [class.complete]="value.status === monitorType.COMPLETE"
+          [class.error]="value.status === monitorType.ERROR">.</span>
   </template>
 </div>
