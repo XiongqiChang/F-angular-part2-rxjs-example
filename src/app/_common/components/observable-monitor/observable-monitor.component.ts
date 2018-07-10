@@ -58,7 +58,7 @@ export class ObservableMonitorComponent implements OnInit {
   }
 
   initStatusSub() {
-    this.status$.distinctUntilChanged()
+    this.status$.distinctUntilChanged().delay(0)
       .filter(status => status === MONITOR_TYPE.SUBSCRIBE)
       .switchMap(() => this.observable
         .takeUntil(Observable.merge(

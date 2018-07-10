@@ -4,6 +4,7 @@ import { MonitorControlComponent } from './_common/components/monitor-control/mo
 import { ObservableMonitorComponent } from './_common/components/observable-monitor/observable-monitor.component';
 import { ObservableExampleComponent } from './observable-example/observable-example.component';
 import { OperatorExampleComponent } from './operator-example/operator-example.component';
+import { HotExampleComponent } from './hot-example/hot-example.component';
 
 export const COMPONENT_PROVIDERS = [
   NoContentComponent,
@@ -12,4 +13,5 @@ export const COMPONENT_PROVIDERS = [
   ObservableMonitorComponent,
   ObservableExampleComponent,
   OperatorExampleComponent,
+  HotExampleComponent,
 ];

@@ -3,7 +3,7 @@
 }
 
 .value-monitor {
-  height: 68px;
+  height: 78px;
   padding: 8px 0;
   position: relative;
   font-size: 0;
@@ -27,16 +27,16 @@
   }
 
   .value + .value {
-    top: 22px;
+    top: 27px;
   }
 
   .value + .value + .value {
-    top: 34px;
+    top: 44px;
   }
 
   .time {
     color: #999;
-    height: 52px;
+    height: 62px;
     display: inline-block;
     font-size: 9px;
     font-weight: bold;
