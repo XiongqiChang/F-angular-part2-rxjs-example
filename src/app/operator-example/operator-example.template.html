@@ -1,10 +1,20 @@
 <monitor-control></monitor-control>
-<observable-monitor name="take" [observable]="take$"></observable-monitor>
-<observable-monitor name="delay" [observable]="delay$"></observable-monitor>
-<observable-monitor name="startWith" [observable]="startWith$"></observable-monitor>
-<observable-monitor name="map" [observable]="map$"></observable-monitor>
-<observable-monitor name="mapTo" [observable]="mapTo$"></observable-monitor>
-<observable-monitor name="pluck" [observable]="pluck$"></observable-monitor>
-<observable-monitor name="filter" [observable]="filter$"></observable-monitor>
-<observable-monitor name="reduce" [observable]="reduce$"></observable-monitor>
-<observable-monitor name="scan" [observable]="scan$"></observable-monitor>
+<tabset>
+  <tab heading="Simple">
+    <observable-monitor name="interval" [observable]="interval$" [autoSub]="autoSub"></observable-monitor>
+    <observable-monitor name="take" [observable]="take$" [autoSub]="autoSub"></observable-monitor>
+    <observable-monitor name="delay" [observable]="delay$" [autoSub]="autoSub"></observable-monitor>
+    <observable-monitor name="startWith" [observable]="startWith$" [autoSub]="autoSub"></observable-monitor>
+  </tab>
+  <tab heading="Map">
+    <observable-monitor name="interval" [observable]="interval$" [autoSub]="autoSub"></observable-monitor>
+    <observable-monitor name="map" [observable]="map$" [autoSub]="autoSub"></observable-monitor>
+    <observable-monitor name="mapTo" [observable]="mapTo$" [autoSub]="autoSub"></observable-monitor>
+    <observable-monitor name="pluck" [observable]="pluck$" [autoSub]="autoSub"></observable-monitor>
+  </tab>
+  <tab heading="Reduce">
+    <observable-monitor name="take" [observable]="take$" [autoSub]="autoSub"></observable-monitor>
+    <observable-monitor name="reduce" [observable]="reduce$" [autoSub]="autoSub"></observable-monitor>
+    <observable-monitor name="scan" [observable]="scan$" [autoSub]="autoSub"></observable-monitor>
+  </tab>
+</tabset>

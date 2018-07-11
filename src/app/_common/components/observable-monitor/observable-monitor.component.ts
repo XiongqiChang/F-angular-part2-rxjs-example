@@ -75,11 +75,11 @@ export class ObservableMonitorComponent implements OnInit {
               this.subject$.next({ type: MONITOR_TYPE.VALUE, value: index });
               this.subject$.next({
                 type: MONITOR_TYPE.INNER,
-                value: value.do({ complete: () => _.remove(this.innerLevels, innerLevel => innerLevel === level)}),
                 level: index,
+                value,
               });
             } else {
-              this.subject$.next({ type: MONITOR_TYPE.VALUE, value });
+              this.subject$.next({ type: MONITOR_TYPE.VALUE, value: JSON.stringify(value) });
             }
           },
           error: error => {
