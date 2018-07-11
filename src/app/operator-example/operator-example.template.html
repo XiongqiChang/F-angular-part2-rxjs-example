@@ -3,8 +3,13 @@
   <tab heading="Simple">
     <observable-monitor name="interval" [observable]="interval$" [autoSub]="autoSub"></observable-monitor>
     <observable-monitor name="take" [observable]="take$" [autoSub]="autoSub"></observable-monitor>
-    <observable-monitor name="delay" [observable]="delay$" [autoSub]="autoSub"></observable-monitor>
     <observable-monitor name="startWith" [observable]="startWith$" [autoSub]="autoSub"></observable-monitor>
+    <observable-monitor name="delay" [observable]="delay$" [autoSub]="autoSub"></observable-monitor>
+  </tab>
+  <tab heading="Order">
+    <observable-monitor name="take" [observable]="take$" [autoSub]="autoSub"></observable-monitor>
+    <observable-monitor name="delay before startWith" [observable]="delayFirst$" [autoSub]="autoSub"></observable-monitor>
+    <observable-monitor name="startWith before delay" [observable]="startWithFirst$" [autoSub]="autoSub"></observable-monitor>
   </tab>
   <tab heading="Map">
     <observable-monitor name="interval" [observable]="interval$" [autoSub]="autoSub"></observable-monitor>

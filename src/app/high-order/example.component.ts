@@ -15,14 +15,17 @@ export class HighOrderExampleComponent {
   tabs: any[];
 
   constructor() {
-    this.highOrder$ = Observable.concat(
-      Observable.never().takeUntil(Observable.timer(1000)),
-      Observable.of(Observable.timer(0, 2500).take(3).map(i => 10 + i)),
-      Observable.never().takeUntil(Observable.timer(3000)),
-      Observable.of(Observable.timer(0, 1500).take(5).map(i => 20 + i)),
-      Observable.never().takeUntil(Observable.timer(2500)),
-      Observable.of(Observable.timer(0, 1000).take(3).map(i => 30 + i)),
-    );
+    const observable1$ = Observable.timer(0, 2500).take(3).map(i => 10 + i);
+    const observable2$ = Observable.timer(0, 1500).take(5).map(i => 20 + i);
+    const observable3$ = Observable.timer(0, 1000).take(3).map(i => 30 + i);
+    this.highOrder$ = Observable.create(observer => {
+      setTimeout(() => observer.next(observable1$), 1000);
+      setTimeout(() => observer.next(observable2$), 4000);
+      setTimeout(() => {
+        observer.next(observable3$);
+        observer.complete();
+      }, 6500);
+    });
     this.mergeAll$ = this.highOrder$.mergeAll();
     this.concatAll$ = this.highOrder$.concatAll();
     this.switch$ = this.highOrder$.switch();
