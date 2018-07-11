@@ -6,6 +6,7 @@ import { ObservableExampleComponent } from './observable-example/observable-exam
 import { OperatorExampleComponent } from './operator-example/operator-example.component';
 import { HotExampleComponent } from './hot-example/hot-example.component';
 import { SubjectExampleComponent } from './subject-example/subject-example.component';
+import { MultipleExampleComponent } from './multiple/example.component';
 
 export const COMPONENT_PROVIDERS = [
   NoContentComponent,
@@ -16,4 +17,5 @@ export const COMPONENT_PROVIDERS = [
   OperatorExampleComponent,
   HotExampleComponent,
   SubjectExampleComponent,
+  MultipleExampleComponent,
 ];

@@ -6,6 +6,7 @@ import { ObservableExampleComponent } from './observable-example/observable-exam
 import { OperatorExampleComponent } from './operator-example/operator-example.component';
 import { HotExampleComponent } from './hot-example/hot-example.component';
 import { SubjectExampleComponent } from './subject-example/subject-example.component';
+import { MultipleExampleComponent } from './multiple/example.component';
 
 export const ROUTES: Routes = [
   {
@@ -27,6 +28,10 @@ export const ROUTES: Routes = [
   {
     path: 'subject',
     component: SubjectExampleComponent,
+  },
+  {
+    path: 'multiple',
+    component: MultipleExampleComponent,
   },
   {
     path: '**',
