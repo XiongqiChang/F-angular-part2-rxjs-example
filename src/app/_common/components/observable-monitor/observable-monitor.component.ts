@@ -6,8 +6,8 @@ import * as _ from 'lodash';
 import { TimerService } from '../../services/timer.service';
 
 enum MONITOR_TYPE {
-  START, STOP,
-  TIMER, VALUE,
+  START, STOP, TERMINATE,
+  TIMER, VALUE, INNER,
   SUBSCRIBE, UNSUBSCRIBE,
   COMPLETE, ERROR,
 }
@@ -23,6 +23,8 @@ export class ObservableMonitorComponent implements OnInit {
   @Input() autoSub: boolean;
   @Input() breakable: boolean = true;
   @Input() observable: Observable<any>;
+  @Input() highOrder: boolean = false;
+  @Input() inner: boolean = false;
   subject$: Subject<any>;
   monitor$: Observable<any[]>;
   status$: BehaviorSubject<MONITOR_TYPE>;
@@ -45,10 +47,11 @@ export class ObservableMonitorComponent implements OnInit {
   initMonitor() {
     this.monitor$ = Observable.create(observer => {
       this.status$.map(status => ({ type: status })).subscribe(observer);
-      this.subject$.map(value => ({ type: MONITOR_TYPE.VALUE, value })).subscribe(observer);
+      this.subject$.subscribe(observer);
       this.timerService.timer$.map(time => ({ type: MONITOR_TYPE.TIMER, value: time })).subscribe(observer);
       this.timerService.running$.map(running => ({ type: running ? MONITOR_TYPE.START : MONITOR_TYPE.STOP })).subscribe(observer);
-    }).scan(this.concatValues.bind(this), []);
+    }).scan(this.concatValues.bind(this), [])
+      .takeUntil(this.status$.filter(status => status === MONITOR_TYPE.TERMINATE));
   }
 
   initButtonStream() {
@@ -65,8 +68,16 @@ export class ObservableMonitorComponent implements OnInit {
           this.status$.filter(status => status !== MONITOR_TYPE.SUBSCRIBE),
           this.timerService.running$.filter(running => !running),
         ))
+        .map((value, index) => [value, index])
         .do({
-          next: value => this.subject$.next(JSON.stringify(value)),
+          next: ([value, index]) => {
+            if (this.highOrder) {
+              this.subject$.next({ type: MONITOR_TYPE.VALUE, value: index + 1 });
+              this.subject$.next({ type: MONITOR_TYPE.INNER, value });
+            } else {
+              this.subject$.next({ type: MONITOR_TYPE.VALUE, value });
+            }
+          },
           error: error => {
             this.subject$.next(error);
             this.status$.next(MONITOR_TYPE.ERROR);
@@ -77,13 +88,16 @@ export class ObservableMonitorComponent implements OnInit {
               this.status$.next(MONITOR_TYPE.COMPLETE);
             }
             this.status$.next(null);
+            if (this.inner) {
+              this.status$.next(MONITOR_TYPE.TERMINATE);
+            }
           },
         }))
       .subscribe();
   }
 
   initAutoSub() {
-    if (this.autoSub) {
+    if (this.inner || this.autoSub) {
       this.timerService.running$
         .filter(running => running)
         .subscribe(() => this.status$.next(MONITOR_TYPE.SUBSCRIBE));
@@ -97,9 +111,15 @@ export class ObservableMonitorComponent implements OnInit {
       case MONITOR_TYPE.ERROR:
       case MONITOR_TYPE.COMPLETE:
       case MONITOR_TYPE.UNSUBSCRIBE:
-        return accumulator.map(node => node.status === MONITOR_TYPE.SUBSCRIBE ? { ...node, status: this.status$.value } : node);
+        accumulator.forEach(node => {
+          if (node.status === MONITOR_TYPE.SUBSCRIBE) {
+            node.status = this.status$.value;
+          }
+        });
+        return accumulator;
       case MONITOR_TYPE.TIMER:
       case MONITOR_TYPE.VALUE:
+      case MONITOR_TYPE.INNER:
         return accumulator.concat({ type, value, status: this.status$.value });
       default:
         return accumulator;

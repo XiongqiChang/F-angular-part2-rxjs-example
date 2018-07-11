@@ -6,6 +6,7 @@ import { OperatorExampleComponent } from './operator-example/operator-example.co
 import { HotExampleComponent } from './hot-example/hot-example.component';
 import { SubjectExampleComponent } from './subject-example/subject-example.component';
 import { MultipleExampleComponent } from './multiple/example.component';
+import { HighOrderExampleComponent } from './high-order/example.component';
 
 export const ROUTES: Routes = [
   {
@@ -31,6 +32,10 @@ export const ROUTES: Routes = [
   {
     path: 'multiple',
     component: MultipleExampleComponent,
+  },
+  {
+    path: 'high-order',
+    component: HighOrderExampleComponent,
   },
   {
     path: '**',

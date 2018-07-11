@@ -8,6 +8,19 @@
   position: relative;
   font-size: 0;
 
+  &.high-order {
+    height: 106px;
+
+    & > .time {
+      height: 28px;
+    }
+
+    .inner {
+      position: absolute;
+      top: 28px;
+    }
+  }
+
   .value {
     position: absolute;
     top: 10px;

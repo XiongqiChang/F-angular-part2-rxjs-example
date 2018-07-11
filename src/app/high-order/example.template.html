@@ -1,8 +1,2 @@
-<tabset>
-  <tab *ngFor="let tab of tabs" [heading]="tab.heading">
-    <monitor-control></monitor-control>
-    <observable-monitor name="observableA" [observable]="observableA$" [autoSub]="autoSub"></observable-monitor>
-    <observable-monitor name="observableB" [observable]="observableB$" [autoSub]="autoSub"></observable-monitor>
-    <observable-monitor name="multiple" [observable]="tab.observable" [autoSub]="autoSub"></observable-monitor>
-  </tab>
-</tabset>
+<monitor-control></monitor-control>
+<observable-monitor name="High Order" [observable]="highOrder$" [autoSub]="true" [highOrder]="true"></observable-monitor>

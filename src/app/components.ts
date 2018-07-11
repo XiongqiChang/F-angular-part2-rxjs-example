@@ -7,6 +7,7 @@ import { OperatorExampleComponent } from './operator-example/operator-example.co
 import { HotExampleComponent } from './hot-example/hot-example.component';
 import { SubjectExampleComponent } from './subject-example/subject-example.component';
 import { MultipleExampleComponent } from './multiple/example.component';
+import { HighOrderExampleComponent } from './high-order/example.component';
 
 export const COMPONENT_PROVIDERS = [
   NoContentComponent,
@@ -17,4 +18,5 @@ export const COMPONENT_PROVIDERS = [
   HotExampleComponent,
   SubjectExampleComponent,
   MultipleExampleComponent,
+  HighOrderExampleComponent,
 ];

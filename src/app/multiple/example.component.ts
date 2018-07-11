@@ -19,7 +19,7 @@ export class MultipleExampleComponent {
 
   constructor() {
     this.autoSub = true;
-    this.observableA$ = Observable.timer(0, 2000).take(2);
+    this.observableA$ = Observable.timer(0, 2000).map(i => String.fromCharCode(97 + i)).take(2);
     this.observableB$ = Observable.timer(1000, 2000).take(3);
     this.merge$ = Observable.merge(this.observableA$, this.observableB$);
     this.combineLatest$ = Observable.combineLatest(this.observableA$, this.observableB$);
