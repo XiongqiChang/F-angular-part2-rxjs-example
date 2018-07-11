@@ -21,7 +21,7 @@
       "styles": [
         "styles.scss"
       ],
-      "scripts": [],
+      "scripts": []
     }
   ],
   "e2e": {

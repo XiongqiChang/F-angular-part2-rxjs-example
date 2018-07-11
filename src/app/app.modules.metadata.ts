@@ -2,6 +2,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 import { ROUTES } from './routes';
 import { AppComponent } from './app.component';
@@ -19,6 +20,7 @@ export const AppModulesMetaData = {
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    TabsModule.forRoot(),
     RouterModule.forRoot(ROUTES, { useHash: true }),
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection

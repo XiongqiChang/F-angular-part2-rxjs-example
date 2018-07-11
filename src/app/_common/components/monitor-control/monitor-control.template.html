@@ -1,2 +1,3 @@
-<button (click)="toggleTimer()">{{timerText$ | async}}</button>
-<button (click)="next()" *ngIf="!!subject">next</button>
+<button class="btn btn-primary" (click)="toggleTimer()">{{timerText$ | async}}</button>
+<button class="btn btn-success" (click)="next()" *ngIf="!!subject">next</button>
+<button class="btn btn-warning" (click)="subject.complete()" *ngIf="!!subject">complete</button>
