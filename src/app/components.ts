@@ -5,6 +5,7 @@ import { ObservableMonitorComponent } from './_common/components/observable-moni
 import { ObservableExampleComponent } from './observable-example/observable-example.component';
 import { OperatorExampleComponent } from './operator-example/operator-example.component';
 import { HotExampleComponent } from './hot-example/hot-example.component';
+import { SubjectExampleComponent } from './subject-example/subject-example.component';
 
 export const COMPONENT_PROVIDERS = [
   NoContentComponent,
@@ -14,4 +15,5 @@ export const COMPONENT_PROVIDERS = [
   ObservableExampleComponent,
   OperatorExampleComponent,
   HotExampleComponent,
+  SubjectExampleComponent,
 ];

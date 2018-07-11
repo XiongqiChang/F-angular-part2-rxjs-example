@@ -1,1 +1,2 @@
 <button (click)="toggleTimer()">{{timerText$ | async}}</button>
+<button (click)="next()" *ngIf="!!subject">next</button>
