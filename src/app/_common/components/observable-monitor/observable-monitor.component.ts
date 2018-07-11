@@ -20,7 +20,7 @@ enum MONITOR_TYPE {
 })
 export class ObservableMonitorComponent implements OnInit {
   @Input() name: string;
-  @Input() autoSub: number;
+  @Input() autoSub: boolean;
   @Input() breakable: boolean = true;
   @Input() observable: Observable<any>;
   subject$: Subject<any>;
@@ -83,10 +83,9 @@ export class ObservableMonitorComponent implements OnInit {
   }
 
   initAutoSub() {
-    if (_.isNumber(this.autoSub)) {
+    if (this.autoSub) {
       this.timerService.running$
         .filter(running => running)
-        .delay(this.autoSub * 1000)
         .subscribe(() => this.status$.next(MONITOR_TYPE.SUBSCRIBE));
     }
   }

@@ -10,7 +10,6 @@ import { MultipleExampleComponent } from './multiple/example.component';
 
 export const COMPONENT_PROVIDERS = [
   NoContentComponent,
-  RxJSExampleComponent,
   MonitorControlComponent,
   ObservableMonitorComponent,
   ObservableExampleComponent,

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MultipleExampleComponent {
-  autoSub: number;
+  autoSub: boolean;
   observableA$: Observable<any>;
   observableB$: Observable<any>;
   merge$: Observable<any>;
@@ -18,7 +18,7 @@ export class MultipleExampleComponent {
   tabs: any[];
 
   constructor() {
-    this.autoSub = 0;
+    this.autoSub = true;
     this.observableA$ = Observable.timer(0, 2000).take(2);
     this.observableB$ = Observable.timer(1000, 2000).take(3);
     this.merge$ = Observable.merge(this.observableA$, this.observableB$);
