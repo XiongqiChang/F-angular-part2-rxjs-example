@@ -11,7 +11,7 @@ export class HighOrderExampleComponent {
   highOrder$: Observable<Observable<any>>;
 
   constructor() {
-    this.highOrder$ = Observable.timer(1000, 3000).take(3)
-      .map(n => Observable.timer(0, 1000).take(3).map(m => (n + 1) * 10 + m));
+    this.highOrder$ = Observable.timer(1000, 2000).take(3)
+      .map(n => Observable.timer(0, 1500).take(3).map(m => (n + 1) * 10 + m));
   }
 }

@@ -68,12 +68,16 @@ export class ObservableMonitorComponent implements OnInit {
           this.status$.filter(status => status !== MONITOR_TYPE.SUBSCRIBE),
           this.timerService.running$.filter(running => !running),
         ))
-        .map((value, index) => [value, index])
+        .map((value, index) => [value, index + 1])
         .do({
           next: ([value, index]) => {
             if (this.highOrder) {
-              this.subject$.next({ type: MONITOR_TYPE.VALUE, value: index + 1 });
-              this.subject$.next({ type: MONITOR_TYPE.INNER, value });
+              this.subject$.next({ type: MONITOR_TYPE.VALUE, value: index });
+              this.subject$.next({
+                type: MONITOR_TYPE.INNER,
+                value: value.do({ complete: () => _.remove(this.innerLevels, innerLevel => innerLevel === level)}),
+                level: index,
+              });
             } else {
               this.subject$.next({ type: MONITOR_TYPE.VALUE, value });
             }
@@ -104,8 +108,8 @@ export class ObservableMonitorComponent implements OnInit {
     }
   }
 
-  concatValues(accumulator, { type, value }) {
-    switch (type) {
+  concatValues(accumulator, value) {
+    switch (value.type) {
       case MONITOR_TYPE.START:
         return [];
       case MONITOR_TYPE.ERROR:
@@ -120,7 +124,7 @@ export class ObservableMonitorComponent implements OnInit {
       case MONITOR_TYPE.TIMER:
       case MONITOR_TYPE.VALUE:
       case MONITOR_TYPE.INNER:
-        return accumulator.concat({ type, value, status: this.status$.value });
+        return accumulator.concat({ ...value, status: this.status$.value });
       default:
         return accumulator;
     }

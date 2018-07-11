@@ -9,16 +9,29 @@
   font-size: 0;
 
   &.high-order {
-    height: 106px;
+    height: 128px;
 
-    & > .time {
+    .time {
       height: 28px;
     }
 
     .inner {
       position: absolute;
-      top: 28px;
+
+      &.level1 {
+        top: 28px;
+      }
+      &.level2 {
+        top: 56px;
+      }
+      &.level3 {
+        top: 84px;
+      }
     }
+  }
+
+  &.inner-observable {
+    height: 28px;
   }
 
   .value {
