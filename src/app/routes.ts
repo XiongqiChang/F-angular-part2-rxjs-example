@@ -7,6 +7,7 @@ import { HotExampleComponent } from './hot-example/hot-example.component';
 import { SubjectExampleComponent } from './subject-example/subject-example.component';
 import { MultipleExampleComponent } from './multiple/example.component';
 import { HighOrderExampleComponent } from './high-order/example.component';
+import { HighOrderMapExampleComponent } from './high-order-map/example.component';
 
 export const ROUTES: Routes = [
   {
@@ -36,6 +37,10 @@ export const ROUTES: Routes = [
   {
     path: 'high-order',
     component: HighOrderExampleComponent,
+  },
+  {
+    path: 'high-order-map',
+    component: HighOrderMapExampleComponent,
   },
   {
     path: '**',

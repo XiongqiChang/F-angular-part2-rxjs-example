@@ -1,0 +1,8 @@
+<monitor-control></monitor-control>
+<observable-monitor name="Timer" [observable]="timer$" [autoSub]="true"></observable-monitor>
+
+<tabset>
+  <tab *ngFor="let tab of tabs" [heading]="tab.heading">
+    <observable-monitor *ngIf="tab.observable" [observable]="tab.observable" [autoSub]="true"></observable-monitor>
+  </tab>
+</tabset>
