@@ -12,11 +12,18 @@ export class HotExampleComponent {
   share$: Observable<any>;
   publish$: Observable<any>;
   publishReplay$: Observable<any>;
+  tabs: any[];
 
   constructor() {
-    this.cold$ = Observable.interval(1000).take(5);
+    this.cold$ = Observable.interval(1500).take(3);
     this.share$ = this.cold$.share();
     this.publish$ = this.cold$.publish().refCount();
     this.publishReplay$ = this.cold$.publishReplay().refCount();
+    this.tabs = [
+      { heading: 'Cold', observable: this.cold$ },
+      { heading: 'Share', observable: this.share$ },
+      { heading: 'Publish', observable: this.publish$ },
+      { heading: 'PublishReplay', observable: this.publishReplay$ },
+    ];
   }
 }

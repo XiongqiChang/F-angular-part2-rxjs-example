@@ -1,5 +1,5 @@
 <tabset>
-  <tab *ngFor="let tab of tabs; let i = index" [heading]="tab.heading" [id]="'tab' + i">
+  <tab *ngFor="let tab of tabs" [heading]="tab.heading">
     <monitor-control [subject]="tab.subject"></monitor-control>
     <observable-monitor name="subject" [observable]="tab.subject" [breakable]="false" [autoSub]="0"></observable-monitor>
     <observable-monitor name="subscription" [observable]="tab.subject"></observable-monitor>
