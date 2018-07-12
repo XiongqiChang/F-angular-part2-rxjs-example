@@ -3,6 +3,6 @@
   <tab *ngFor="let tab of tabs" [heading]="tab.heading">
     <observable-monitor name="observableA" [observable]="observableA$" [autoSub]="autoSub"></observable-monitor>
     <observable-monitor name="observableB" [observable]="observableB$" [autoSub]="autoSub"></observable-monitor>
-    <observable-monitor name="multiple" [observable]="tab.observable" [autoSub]="autoSub"></observable-monitor>
+    <observable-monitor [name]="tab.heading" [observable]="tab.observable" [autoSub]="autoSub"></observable-monitor>
   </tab>
 </tabset>
