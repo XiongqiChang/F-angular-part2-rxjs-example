@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import { TimerService } from '../../services/timer.service';
 
 enum MONITOR_TYPE {
-  START, STOP, TERMINATE,
+  START, STOP,
   TIMER, VALUE, INNER,
   SUBSCRIBE, UNSUBSCRIBE,
   COMPLETE, ERROR,
@@ -52,8 +52,7 @@ export class ObservableMonitorComponent implements OnInit {
       this.subject$.subscribe(observer);
       this.timerService.timer$.map(time => ({ type: MONITOR_TYPE.TIMER, value: time })).subscribe(observer);
       this.timerService.running$.map(running => ({ type: running ? MONITOR_TYPE.START : MONITOR_TYPE.STOP })).subscribe(observer);
-    }).scan(this.concatValues.bind(this), [])
-      .takeUntil(this.status$.filter(status => status === MONITOR_TYPE.TERMINATE));
+    }).scan(this.concatValues.bind(this), []);
   }
 
   initButtonStream() {
@@ -94,10 +93,7 @@ export class ObservableMonitorComponent implements OnInit {
               this.status$.next(MONITOR_TYPE.COMPLETE);
             }
             this.status$.next(null);
-            if (this.inner) {
-              this.status$.next(MONITOR_TYPE.TERMINATE);
-            }
-            if (this.subject) {
+            if (this.inner || this.subject) {
               this.subject$.complete();
             }
           },
