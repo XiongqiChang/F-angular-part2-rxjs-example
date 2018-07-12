@@ -3,6 +3,6 @@
 
 <tabset>
   <tab *ngFor="let tab of tabs" [heading]="tab.heading">
-    <observable-monitor *ngIf="tab.observable" [observable]="tab.observable" [autoSub]="true"></observable-monitor>
+    <observable-monitor *ngIf="tab.observable" [observable]="tab.observable" [autoSub]="true" [highOrder]="tab.heading === 'Map'"></observable-monitor>
   </tab>
 </tabset>

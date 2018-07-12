@@ -1,15 +1,22 @@
 <monitor-control></monitor-control>
 <tabset>
   <tab heading="Simple">
-    <observable-monitor name="interval" [observable]="interval$" [autoSub]="autoSub"></observable-monitor>
-    <observable-monitor name="take" [observable]="take$" [autoSub]="autoSub"></observable-monitor>
-    <observable-monitor name="startWith" [observable]="startWith$" [autoSub]="autoSub"></observable-monitor>
-    <observable-monitor name="delay" [observable]="delay$" [autoSub]="autoSub"></observable-monitor>
+    <observable-monitor name="interval" [observable]="interval$"></observable-monitor>
+    <observable-monitor name="take" [observable]="take$"></observable-monitor>
+    <observable-monitor name="startWith" [observable]="startWith$"></observable-monitor>
+    <observable-monitor name="delay" [observable]="delay$"></observable-monitor>
+    <observable-monitor name="distinct" [observable]="distinct$"></observable-monitor>
+    <observable-monitor name="distinctUntilChange" [observable]="distinctUntilChange$"></observable-monitor>
+  </tab>
+  <tab heading="TakeUntil">
+    <observable-monitor name="interval" [observable]="interval$" [autoSub]="true"></observable-monitor>
+    <observable-monitor name="sign" [observable]="takeUntilSign$" [autoSub]="true"></observable-monitor>
+    <observable-monitor name="takeUntil" [observable]="takeUntil$" [autoSub]="true"></observable-monitor>
   </tab>
   <tab heading="Order">
     <observable-monitor name="take" [observable]="take$" [autoSub]="autoSub"></observable-monitor>
-    <observable-monitor name="delay before startWith" [observable]="delayFirst$" [autoSub]="autoSub"></observable-monitor>
-    <observable-monitor name="startWith before delay" [observable]="startWithFirst$" [autoSub]="autoSub"></observable-monitor>
+    <observable-monitor name="delay before startWith" [observable]="delayFirst$"></observable-monitor>
+    <observable-monitor name="startWith before delay" [observable]="startWithFirst$"></observable-monitor>
   </tab>
   <tab heading="Map">
     <observable-monitor name="interval" [observable]="interval$" [autoSub]="autoSub"></observable-monitor>

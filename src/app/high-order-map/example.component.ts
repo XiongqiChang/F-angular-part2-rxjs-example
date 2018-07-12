@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class HighOrderMapExampleComponent {
   timer$: Observable<number>;
+  map$: Observable<Observable<number>>;
   mergeMap$: Observable<number>;
   concatMap$: Observable<number>;
   switchMap$: Observable<number>;
@@ -25,11 +26,13 @@ export class HighOrderMapExampleComponent {
       Observable.timer(2500).mapTo(3),
     );
 
+    this.map$ = this.timer$.map(i => observables[i]);
     this.mergeMap$ = this.timer$.mergeMap(i => observables[i]);
     this.concatMap$ = this.timer$.concatMap(i => observables[i]);
     this.switchMap$ = this.timer$.switchMap(i => observables[i]);
     this.tabs = [
       { heading: 'None' },
+      { heading: 'Map', observable: this.map$ },
       { heading: 'Merge', observable: this.mergeMap$ },
       { heading: 'Concat', observable: this.concatMap$ },
       { heading: 'Switch', observable: this.switchMap$ },

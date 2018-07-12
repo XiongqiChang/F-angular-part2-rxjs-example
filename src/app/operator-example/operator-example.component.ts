@@ -14,6 +14,10 @@ export class OperatorExampleComponent {
   startWith$: Observable<number>;
   delayFirst$: Observable<number>;
   startWithFirst$: Observable<number>;
+  distinct$: Observable<number>;
+  distinctUntilChange$: Observable<number>;
+  takeUntil$: Observable<number>;
+  takeUntilSign$: Observable<any>;
   map$: Observable<any>;
   mapTo$: Observable<string>;
   pluck$: Observable<number>;
@@ -27,6 +31,13 @@ export class OperatorExampleComponent {
     this.take$ = this.interval$.take(5);
     this.delay$ = this.take$.delay(1000);
     this.startWith$ = this.take$.startWith(100);
+    this.distinct$ = this.interval$.distinct();
+    this.distinctUntilChange$ = this.interval$.distinctUntilChanged();
+
+    this.takeUntilSign$ = Observable.create(observer => {
+      setTimeout(() => observer.next(), 3456);
+    });
+    this.takeUntil$ = this.interval$.takeUntil(this.takeUntilSign$);
 
     this.delayFirst$ = this.take$.delay(1000).startWith(100);
     this.startWithFirst$ = this.take$.startWith(100).delay(1000);
