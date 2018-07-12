@@ -1,8 +1,14 @@
 <monitor-control></monitor-control>
-<observable-monitor name="of" [observable]="of$"></observable-monitor>
-<observable-monitor name="from" [observable]="from$"></observable-monitor>
-<observable-monitor name="range" [observable]="range$"></observable-monitor>
-<observable-monitor name="interval" [observable]="interval$"></observable-monitor>
-<observable-monitor name="timer" [observable]="timer$"></observable-monitor>
-<observable-monitor name="create" [observable]="create$"></observable-monitor>
-<observable-monitor name="fromEvent" [observable]="fromEvent$"></observable-monitor>
+<tabset>
+  <tab heading="Sync">
+    <observable-monitor name="of" [observable]="of$"></observable-monitor>
+    <observable-monitor name="from" [observable]="from$"></observable-monitor>
+    <observable-monitor name="range" [observable]="range$"></observable-monitor>
+  </tab>
+  <tab heading="Async">
+    <observable-monitor name="interval" [observable]="interval$"></observable-monitor>
+    <observable-monitor name="timer" [observable]="timer$"></observable-monitor>
+    <observable-monitor name="create" [observable]="create$"></observable-monitor>
+    <observable-monitor name="fromEvent" [observable]="fromEvent$"></observable-monitor>
+  </tab>
+</tabset>

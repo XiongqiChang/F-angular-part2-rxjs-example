@@ -65,6 +65,14 @@ export class ObservableMonitorComponent implements OnInit {
     this.status$.distinctUntilChanged().delay(0)
       .filter(status => status === MONITOR_TYPE.SUBSCRIBE)
       .switchMap(() => this.observable
+        .do({
+          complete: () => {
+            if (this.inner || this.subject) {
+              this.status$.next(MONITOR_TYPE.COMPLETE);
+              this.subject$.complete();
+            }
+          },
+        })
         .takeUntil(Observable.merge(
           this.status$.filter(status => status !== MONITOR_TYPE.SUBSCRIBE),
           this.timerService.running$.filter(running => !running),
@@ -93,9 +101,6 @@ export class ObservableMonitorComponent implements OnInit {
               this.status$.next(MONITOR_TYPE.COMPLETE);
             }
             this.status$.next(null);
-            if (this.inner || this.subject) {
-              this.subject$.complete();
-            }
           },
         }))
       .subscribe();
@@ -136,12 +141,10 @@ export class ObservableMonitorComponent implements OnInit {
       return this.status$.next(MONITOR_TYPE.SUBSCRIBE);
     }
 
-    if (!this.breakable) {
-      return;
+    if (this.breakable) {
+      this.status$.next(MONITOR_TYPE.UNSUBSCRIBE);
+      this.status$.next(null);
     }
-
-    this.status$.next(MONITOR_TYPE.UNSUBSCRIBE);
-    this.status$.next(null);
   }
 
   next() {
