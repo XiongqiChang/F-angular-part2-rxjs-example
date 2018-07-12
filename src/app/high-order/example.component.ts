@@ -21,11 +21,11 @@ export class HighOrderExampleComponent {
     const observable3$ = Observable.timer(0, 1000).take(3).map(i => 30 + i);
     this.highOrder$ = Observable.create(observer => {
       setTimeout(() => observer.next(observable1$), 1000);
-      setTimeout(() => observer.next(observable2$), 4000);
+      setTimeout(() => observer.next(observable2$), 1000 + 3000);
       setTimeout(() => {
         observer.next(observable3$);
         observer.complete();
-      }, 6500);
+      }, 1000 + 3000 + 2500);
     });
     this.mergeAll$ = this.highOrder$.mergeAll();
     this.combineAll$ = this.highOrder$.combineAll();
