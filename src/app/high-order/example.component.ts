@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 export class HighOrderExampleComponent {
   highOrder$: Observable<Observable<number>>;
   mergeAll$: Observable<number>;
+  combineAll$: Observable<number>;
   concatAll$: Observable<number>;
   switch$: Observable<number>;
   tabs: any[];
@@ -27,11 +28,13 @@ export class HighOrderExampleComponent {
       }, 6500);
     });
     this.mergeAll$ = this.highOrder$.mergeAll();
+    this.combineAll$ = this.highOrder$.combineAll();
     this.concatAll$ = this.highOrder$.concatAll();
     this.switch$ = this.highOrder$.switch();
     this.tabs = [
       { heading: 'None' },
       { heading: 'Merge', observable: this.mergeAll$ },
+      { heading: 'Combine', observable: this.combineAll$ },
       { heading: 'Concat', observable: this.concatAll$ },
       { heading: 'Switch', observable: this.switch$ },
     ]

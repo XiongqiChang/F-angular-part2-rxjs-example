@@ -8,6 +8,7 @@ import { SubjectExampleComponent } from './subject-example/subject-example.compo
 import { MultipleExampleComponent } from './multiple/example.component';
 import { HighOrderExampleComponent } from './high-order/example.component';
 import { HighOrderMapExampleComponent } from './high-order-map/example.component';
+import { ErrorHandleExampleComponent } from './error-handle/example.component';
 
 export const ROUTES: Routes = [
   {
@@ -41,6 +42,10 @@ export const ROUTES: Routes = [
   {
     path: 'high-order-map',
     component: HighOrderMapExampleComponent,
+  },
+  {
+    path: 'error-handle',
+    component: ErrorHandleExampleComponent,
   },
   {
     path: '**',
