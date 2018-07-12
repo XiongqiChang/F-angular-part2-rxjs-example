@@ -1,7 +1,7 @@
+<monitor-control></monitor-control>
 <tabset>
   <tab *ngFor="let tab of tabs" [heading]="tab.heading">
-    <monitor-control [subject]="tab.subject"></monitor-control>
-    <observable-monitor name="subject" [observable]="tab.subject" [breakable]="false" [autoSub]="0"></observable-monitor>
+    <observable-monitor name="subject" [observable]="tab.subject" [subject]="true"></observable-monitor>
     <observable-monitor name="subscription" [observable]="tab.subject"></observable-monitor>
   </tab>
 </tabset>

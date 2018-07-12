@@ -22,15 +22,17 @@ export class ObservableMonitorComponent implements OnInit {
   @Input() name: string;
   @Input() autoSub: boolean;
   @Input() breakable: boolean = true;
-  @Input() observable: Observable<any>;
+  @Input() observable: Observable<any> | Subject<any>;
   @Input() highOrder: boolean = false;
   @Input() inner: boolean = false;
+  @Input() subject: boolean = false;
   subject$: Subject<any>;
   monitor$: Observable<any[]>;
   status$: BehaviorSubject<MONITOR_TYPE>;
   buttonText$: Observable<string>;
   buttonDisabled$: Observable<boolean>;
   monitorType = MONITOR_TYPE;
+  counter: number = 0;
 
   constructor(private timerService: TimerService) {
     this.subject$ = new Subject();
@@ -95,13 +97,16 @@ export class ObservableMonitorComponent implements OnInit {
             if (this.inner) {
               this.status$.next(MONITOR_TYPE.TERMINATE);
             }
+            if (this.subject) {
+              this.subject$.complete();
+            }
           },
         }))
       .subscribe();
   }
 
   initAutoSub() {
-    if (this.inner || this.autoSub) {
+    if (this.inner || this.subject || this.autoSub) {
       this.timerService.running$
         .filter(running => running)
         .subscribe(() => this.status$.next(MONITOR_TYPE.SUBSCRIBE));
@@ -141,5 +146,13 @@ export class ObservableMonitorComponent implements OnInit {
 
     this.status$.next(MONITOR_TYPE.UNSUBSCRIBE);
     this.status$.next(null);
+  }
+
+  next() {
+    (this.observable as Subject<any>).next(this.counter++);
+  }
+
+  complete() {
+    (this.observable as Subject<any>).complete();
   }
 }

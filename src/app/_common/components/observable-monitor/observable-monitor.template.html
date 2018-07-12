@@ -1,6 +1,8 @@
 <template [ngIf]="!inner">
   <h3>{{name}}</h3>
-  <button class="btn btn-primary" (click)="observe()" [disabled]="buttonDisabled$ | async">{{buttonText$ | async}}</button>
+  <button *ngIf="!subject" class="btn btn-primary" (click)="observe()" [disabled]="buttonDisabled$ | async">{{buttonText$ | async}}</button>
+  <button *ngIf="subject" class="btn btn-primary" (click)="next()">next</button>
+  <button *ngIf="subject" class="btn btn-success" (click)="complete()">complete</button>
   <span *ngIf="!highOrder">value: {{(subject$ | async)?.value}}</span>
 </template>
 <div class="value-monitor" [class.high-order]="highOrder" [class.inner-observable]="inner">

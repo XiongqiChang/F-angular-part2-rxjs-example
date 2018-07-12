@@ -1,6 +1,6 @@
+<monitor-control></monitor-control>
 <tabset>
   <tab *ngFor="let tab of tabs" [heading]="tab.heading">
-    <monitor-control></monitor-control>
     <observable-monitor name="1" [observable]="tab.observable"></observable-monitor>
     <observable-monitor name="2" [observable]="tab.observable"></observable-monitor>
   </tab>
