@@ -1,7 +1,9 @@
 <monitor-control></monitor-control>
-<tabset>
-  <tab *ngFor="let tab of tabs" [heading]="tab.heading">
-    <observable-monitor name="subject" [observable]="tab.subject" [subject]="true"></observable-monitor>
-    <observable-monitor name="subscription" [observable]="tab.subject"></observable-monitor>
+<tabset #tabSet>
+  <tab *ngFor="let tab of tabs; let i = index" [heading]="tab.heading">
+    <ng-container *ngIf="tabSet.tabs[i].active">
+      <observable-monitor name="subject" [observable]="tab.subject" [subject]="true"></observable-monitor>
+      <observable-monitor name="subscription" [observable]="tab.subject"></observable-monitor>
+    </ng-container>
   </tab>
 </tabset>

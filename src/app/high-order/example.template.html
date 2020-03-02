@@ -1,8 +1,11 @@
 <monitor-control></monitor-control>
-<observable-monitor name="High Order" [observable]="highOrder$" [autoSub]="true" [highOrder]="true"></observable-monitor>
+<observable-monitor name="High Order" [observable]="highOrder$" [autoSub]="true"
+                    [highOrder]="true"></observable-monitor>
 
-<tabset>
-  <tab *ngFor="let tab of tabs" [heading]="tab.heading">
-    <observable-monitor *ngIf="tab.observable" [observable]="tab.observable" [autoSub]="true"></observable-monitor>
+<tabset #tabSet>
+  <tab *ngFor="let tab of tabs; let i = index" [heading]="tab.heading">
+    <ng-container *ngIf="tabSet.tabs[i].active">
+      <observable-monitor *ngIf="tab.observable" [observable]="tab.observable" [autoSub]="true"></observable-monitor>
+    </ng-container>
   </tab>
 </tabset>

@@ -1,14 +1,18 @@
 <monitor-control></monitor-control>
-<tabset>
+<tabset #tabs>
   <tab heading="Sync">
-    <observable-monitor name="of" [observable]="of$"></observable-monitor>
-    <observable-monitor name="from" [observable]="from$"></observable-monitor>
-    <observable-monitor name="range" [observable]="range$"></observable-monitor>
+    <ng-container *ngIf="tabs.tabs[0].active">
+      <observable-monitor name="of" [observable]="of$"></observable-monitor>
+      <observable-monitor name="from" [observable]="from$"></observable-monitor>
+      <observable-monitor name="range" [observable]="range$"></observable-monitor>
+    </ng-container>
   </tab>
   <tab heading="Async">
-    <observable-monitor name="interval" [observable]="interval$"></observable-monitor>
-    <observable-monitor name="timer" [observable]="timer$"></observable-monitor>
-    <observable-monitor name="create" [observable]="create$"></observable-monitor>
-    <observable-monitor name="fromEvent" [observable]="fromEvent$"></observable-monitor>
+    <ng-container *ngIf="tabs.tabs[1].active">
+      <observable-monitor name="interval" [observable]="interval$"></observable-monitor>
+      <observable-monitor name="timer" [observable]="timer$"></observable-monitor>
+      <observable-monitor name="create" [observable]="create$"></observable-monitor>
+      <observable-monitor name="fromEvent" [observable]="fromEvent$"></observable-monitor>
+    </ng-container>
   </tab>
 </tabset>

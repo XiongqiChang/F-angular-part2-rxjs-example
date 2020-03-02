@@ -1,7 +1,9 @@
 <monitor-control></monitor-control>
-<tabset>
-  <tab *ngFor="let tab of tabs" [heading]="tab.heading">
-    <observable-monitor name="1" [observable]="tab.observable"></observable-monitor>
-    <observable-monitor name="2" [observable]="tab.observable"></observable-monitor>
+<tabset #tabSet>
+  <tab *ngFor="let tab of tabs; let i = index" [heading]="tab.heading">
+    <ng-container *ngIf="tabSet.tabs[i].active">
+      <observable-monitor name="1" [observable]="tab.observable"></observable-monitor>
+      <observable-monitor name="2" [observable]="tab.observable"></observable-monitor>
+    </ng-container>
   </tab>
 </tabset>
