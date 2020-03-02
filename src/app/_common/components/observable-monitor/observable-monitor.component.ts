@@ -1,8 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import * as _ from 'lodash';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject, combineLatest, merge, Observable, Subject } from 'rxjs';
+import { delay, distinctUntilChanged, filter, map, scan, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TimerService } from '../../services/timer.service';
 
 enum MONITOR_TYPE {
@@ -13,7 +11,7 @@ enum MONITOR_TYPE {
 }
 
 @Component({
-  selector: 'observable-monitor',
+  selector: 'app-observable-monitor',
   templateUrl: './observable-monitor.template.html',
   styleUrls: ['./observable-monitor.style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,6 +24,7 @@ export class ObservableMonitorComponent implements OnInit {
   @Input() highOrder: boolean = false;
   @Input() inner: boolean = false;
   @Input() subject: boolean = false;
+  @Input() noContent: boolean = false;
   subject$: Subject<any>;
   monitor$: Observable<any[]>;
   status$: BehaviorSubject<MONITOR_TYPE>;
@@ -47,69 +46,73 @@ export class ObservableMonitorComponent implements OnInit {
   }
 
   initMonitor() {
-    this.monitor$ = Observable.create(observer => {
-      this.status$.map(status => ({ type: status })).subscribe(observer);
+    this.monitor$ = new Observable(observer => {
+      this.status$.pipe(map(status => ({ type: status }))).subscribe(observer);
       this.subject$.subscribe(observer);
-      this.timerService.timer$.map(time => ({ type: MONITOR_TYPE.TIMER, value: time })).subscribe(observer);
-      this.timerService.running$.map(running => ({ type: running ? MONITOR_TYPE.START : MONITOR_TYPE.STOP })).subscribe(observer);
-    }).scan(this.concatValues.bind(this), []);
+      this.timerService.timer$.pipe(map(time => ({ type: MONITOR_TYPE.TIMER, value: time }))).subscribe(observer);
+      this.timerService.running$.pipe(map(running => ({ type: running ? MONITOR_TYPE.START : MONITOR_TYPE.STOP }))).subscribe(observer);
+    }).pipe(scan(this.concatValues.bind(this), []));
   }
 
   initButtonStream() {
-    this.buttonText$ = this.status$.map(status => this.breakable && status === MONITOR_TYPE.SUBSCRIBE ? 'break' : 'observe');
-    this.buttonDisabled$ = Observable.combineLatest(this.status$, this.timerService.running$)
-      .map(([status, running]) => !running || (status === MONITOR_TYPE.SUBSCRIBE && !this.breakable));
+    this.buttonText$ = this.status$.pipe(map(status => this.breakable && status === MONITOR_TYPE.SUBSCRIBE ? 'break' : 'observe'));
+    this.buttonDisabled$ = combineLatest([this.status$, this.timerService.running$])
+      .pipe(map(([status, running]) => !running || (status === MONITOR_TYPE.SUBSCRIBE && !this.breakable)));
   }
 
   initStatusSub() {
-    this.status$.distinctUntilChanged().delay(0)
-      .filter(status => status === MONITOR_TYPE.SUBSCRIBE)
-      .switchMap(() => this.observable
-        .do({
-          complete: () => {
-            if (this.inner || this.subject) {
-              this.status$.next(MONITOR_TYPE.COMPLETE);
-              this.subject$.complete();
-            }
-          },
-        })
-        .takeUntil(Observable.merge(
-          this.status$.filter(status => status !== MONITOR_TYPE.SUBSCRIBE),
-          this.timerService.running$.filter(running => !running),
-        ))
-        .map((value, index) => [value, index + 1])
-        .do({
-          next: ([value, index]) => {
-            if (this.highOrder) {
-              this.subject$.next({ type: MONITOR_TYPE.VALUE, value: index });
-              this.subject$.next({
-                type: MONITOR_TYPE.INNER,
-                level: index,
-                value,
-              });
-            } else {
-              this.subject$.next({ type: MONITOR_TYPE.VALUE, value: JSON.stringify(value) });
-            }
-          },
-          error: error => {
-            this.subject$.next(error);
-            this.status$.next(MONITOR_TYPE.ERROR);
-            this.status$.next(null);
-          },
-          complete: () => {
-            if (this.timerService.running$.value) {
-              this.status$.next(MONITOR_TYPE.COMPLETE);
-            }
-            this.status$.next(null);
-          },
-        }))
-      .subscribe();
+    this.status$.pipe(
+      distinctUntilChanged(),
+      delay(0),
+      filter(status => status === MONITOR_TYPE.SUBSCRIBE),
+      switchMap(() => this.observable
+        .pipe(tap({
+            complete: () => {
+              if (this.inner || this.subject) {
+                this.status$.next(MONITOR_TYPE.COMPLETE);
+                this.subject$.complete();
+              }
+            },
+          }),
+          takeUntil(merge(
+            this.status$.pipe(filter(status => status !== MONITOR_TYPE.SUBSCRIBE)),
+            this.timerService.running$.pipe(filter(running => !running)),
+          )),
+          map((value, index) => [value, index + 1]),
+          tap({
+            next: ([value, index]) => {
+              if (this.highOrder) {
+                this.subject$.next({ type: MONITOR_TYPE.VALUE, value: index });
+                this.subject$.next({
+                  type: MONITOR_TYPE.INNER,
+                  level: index,
+                  value,
+                });
+              } else {
+                this.subject$.next({ type: MONITOR_TYPE.VALUE, value: JSON.stringify(value) });
+              }
+            },
+            error: error => {
+              this.subject$.next(error);
+              this.status$.next(MONITOR_TYPE.ERROR);
+              this.status$.next(null);
+            },
+            complete: () => {
+              if (this.timerService.running$.value) {
+                this.status$.next(MONITOR_TYPE.COMPLETE);
+              }
+              this.status$.next(null);
+            },
+          }),
+        ),
+      ),
+    ).subscribe();
   }
 
   initAutoSub() {
     if (this.inner || this.subject || this.autoSub) {
       this.timerService.running$
-        .filter(running => running)
+        .pipe(filter((running: boolean) => running))
         .subscribe(() => this.status$.next(MONITOR_TYPE.SUBSCRIBE));
     }
   }

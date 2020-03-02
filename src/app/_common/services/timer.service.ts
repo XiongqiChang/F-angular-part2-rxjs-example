@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
+import { BehaviorSubject, Observable, partition, Subject, timer } from 'rxjs';
+import { filter, mapTo, switchMapTo, takeUntil } from 'rxjs/operators';
 
 @Injectable()
 export class TimerService {
@@ -14,9 +12,12 @@ export class TimerService {
   constructor() {
     this.timer$ = new Subject();
     this.running$ = new BehaviorSubject(false);
-    this.timer$.filter(time => time > 600).mapTo(false).subscribe(this.running$);
-    [this.timerStart$, this.timerStop$] = this.running$.asObservable().partition(running => running);
-    this.timerStart$.switchMapTo(Observable.timer(0, 50).takeUntil(this.timerStop$)).subscribe(this.timer$);
+    this.timer$.pipe(
+      filter(time => time > 600),
+      mapTo(false),
+    ).subscribe(this.running$);
+    [this.timerStart$, this.timerStop$] = partition(this.running$, running => running);
+    this.timerStart$.pipe(switchMapTo(timer(0, 50).pipe(takeUntil(this.timerStop$)))).subscribe(this.timer$);
   }
 
   toggle(): void {

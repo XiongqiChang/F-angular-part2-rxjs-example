@@ -1,10 +1,10 @@
-<monitor-control></monitor-control>
-<observable-monitor name="Timer" [observable]="timer$" [autoSub]="true"></observable-monitor>
+<app-monitor-control></app-monitor-control>
+<app-observable-monitor name="Timer" [observable]="timer$" [autoSub]="true"></app-observable-monitor>
 
 <tabset #tabSet>
   <tab *ngFor="let tab of tabs; let i = index" [heading]="tab.heading">
     <ng-container *ngIf="tabSet.tabs[i].active">
-      <observable-monitor *ngIf="tab.observable" [observable]="tab.observable" [autoSub]="true" [highOrder]="tab.heading === 'Map'"></observable-monitor>
+      <app-observable-monitor *ngIf="tab.observable" [observable]="tab.observable" [autoSub]="true" [highOrder]="tab.heading === 'Map'"></app-observable-monitor>
     </ng-container>
   </tab>
 </tabset>

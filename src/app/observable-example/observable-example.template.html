@@ -1,18 +1,19 @@
-<monitor-control></monitor-control>
+<app-monitor-control></app-monitor-control>
 <tabset #tabs>
   <tab heading="Sync">
     <ng-container *ngIf="tabs.tabs[0].active">
-      <observable-monitor name="of" [observable]="of$"></observable-monitor>
-      <observable-monitor name="from" [observable]="from$"></observable-monitor>
-      <observable-monitor name="range" [observable]="range$"></observable-monitor>
+      <app-observable-monitor name="of" [observable]="of$"></app-observable-monitor>
+      <app-observable-monitor name="from" [observable]="from$"></app-observable-monitor>
+      <app-observable-monitor name="range" [observable]="range$"></app-observable-monitor>
     </ng-container>
   </tab>
-  <tab heading="Async">
+  <tab heading="Async" (select)="initFromEvent()">
     <ng-container *ngIf="tabs.tabs[1].active">
-      <observable-monitor name="interval" [observable]="interval$"></observable-monitor>
-      <observable-monitor name="timer" [observable]="timer$"></observable-monitor>
-      <observable-monitor name="create" [observable]="create$"></observable-monitor>
-      <observable-monitor name="fromEvent" [observable]="fromEvent$"></observable-monitor>
+      <app-observable-monitor name="interval" [observable]="interval$"></app-observable-monitor>
+      <app-observable-monitor name="timer" [observable]="timer$"></app-observable-monitor>
+      <app-observable-monitor name="create" [observable]="create$"></app-observable-monitor>
+      <app-observable-monitor name="fromEvent" [observable]="fromEvent$" noContent="true"></app-observable-monitor>
+      <button class="btn btn-primary" #button>Button</button>
     </ng-container>
   </tab>
 </tabset>

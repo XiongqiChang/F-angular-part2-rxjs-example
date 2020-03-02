@@ -1,8 +1,9 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Observable, timer } from 'rxjs';
+import { catchError, map, mergeMapTo, retry, startWith, take } from 'rxjs/operators';
 
 @Component({
-  selector: 'multiple-example',
+  selector: 'app-multiple-example',
   templateUrl: './example.template.html',
   styleUrls: ['./example.style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,10 +17,13 @@ export class ErrorHandleExampleComponent {
   mergeMapCaught$: Observable<any>;
 
   constructor() {
-    this.error$ = Observable.timer(2000).map(() => {
-      throw Error('error');
-    }).startWith('start');
-    const errorHandler = error => Observable.create(observer => {
+    this.error$ = timer(2000).pipe(
+      map(() => {
+        throw Error('error');
+      }),
+      startWith('start'),
+    );
+    const errorHandler = error => new Observable(observer => {
       observer.next('error');
       setTimeout(() => {
         observer.next('end');
@@ -27,11 +31,11 @@ export class ErrorHandleExampleComponent {
       }, 500);
     });
 
-    this.catch$ = this.error$.catch(errorHandler);
-    this.retry$ = this.error$.retry(2);
-    const timer$ = Observable.timer(1000, 2000).take(3);
-    this.mergeMap$ = timer$.mergeMapTo(this.error$);
-    this.catchMergeMapped$ = this.mergeMap$.catch(errorHandler);
-    this.mergeMapCaught$ = timer$.mergeMapTo(this.catch$);
+    this.catch$ = this.error$.pipe(catchError(errorHandler));
+    this.retry$ = this.error$.pipe(retry(2));
+    const timer$ = timer(1000, 2000).pipe(take(3));
+    this.mergeMap$ = timer$.pipe(mergeMapTo(this.error$));
+    this.catchMergeMapped$ = this.mergeMap$.pipe(catchError(errorHandler));
+    this.mergeMapCaught$ = timer$.pipe(mergeMapTo(this.catch$));
   }
 }

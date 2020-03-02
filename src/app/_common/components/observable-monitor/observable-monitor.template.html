@@ -1,20 +1,20 @@
-<template [ngIf]="!inner">
+<ng-template [ngIf]="!inner">
   <h3>{{name}}</h3>
   <button *ngIf="!subject" class="btn btn-primary" (click)="observe()" [disabled]="buttonDisabled$ | async">{{buttonText$ | async}}</button>
   <button *ngIf="subject" class="btn btn-primary" (click)="next()">next</button>
   <button *ngIf="subject" class="btn btn-success" (click)="complete()">complete</button>
   <span *ngIf="!highOrder">value: {{(subject$ | async)?.value}}</span>
-</template>
+</ng-template>
 <div class="value-monitor" [class.high-order]="highOrder" [class.inner-observable]="inner">
-  <template ngFor let-value [ngForOf]="monitor$ | async">
+  <ng-template ngFor let-value [ngForOf]="monitor$ | async">
     <span class="time" *ngIf="value?.type === monitorType.TIMER"
           [class.subscribe]="value.status === monitorType.SUBSCRIBE"
           [class.unsubscribe]="value.status === monitorType.UNSUBSCRIBE"
           [class.complete]="value.status === monitorType.COMPLETE"
           [class.error]="value.status === monitorType.ERROR">.</span>
-    <span class="value" *ngIf="value?.type === monitorType.VALUE">{{value.value}}</span>
+    <span class="value" *ngIf="value?.type === monitorType.VALUE">{{noContent ? '' : value.value}}</span>
     <span [ngClass]="['inner', 'level' + value.level]" *ngIf="value?.type === monitorType.INNER">
-      <observable-monitor [observable]="value.value" [inner]="true"></observable-monitor>
+      <app-observable-monitor [observable]="value.value" [inner]="true"></app-observable-monitor>
     </span>
-  </template>
+  </ng-template>
 </div>

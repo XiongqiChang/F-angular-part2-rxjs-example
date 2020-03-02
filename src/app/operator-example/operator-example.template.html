@@ -1,42 +1,42 @@
-<monitor-control></monitor-control>
+<app-monitor-control></app-monitor-control>
 <tabset #tabs>
   <tab heading="Simple">
     <ng-container *ngIf="tabs.tabs[0].active">
-      <observable-monitor name="interval" [observable]="interval$"></observable-monitor>
-      <observable-monitor name="take" [observable]="take$"></observable-monitor>
-      <observable-monitor name="startWith" [observable]="startWith$"></observable-monitor>
-      <observable-monitor name="delay" [observable]="delay$"></observable-monitor>
-      <observable-monitor name="distinct" [observable]="distinct$"></observable-monitor>
-      <observable-monitor name="distinctUntilChange" [observable]="distinctUntilChange$"></observable-monitor>
+      <app-observable-monitor name="interval" [observable]="interval$"></app-observable-monitor>
+      <app-observable-monitor name="take" [observable]="take$"></app-observable-monitor>
+      <app-observable-monitor name="startWith" [observable]="startWith$"></app-observable-monitor>
+      <app-observable-monitor name="delay" [observable]="delay$"></app-observable-monitor>
+      <app-observable-monitor name="distinct" [observable]="distinct$"></app-observable-monitor>
+      <app-observable-monitor name="distinctUntilChange" [observable]="distinctUntilChange$"></app-observable-monitor>
     </ng-container>
   </tab>
   <tab heading="TakeUntil">
     <ng-container *ngIf="tabs.tabs[1].active">
-      <observable-monitor name="interval" [observable]="interval$" [autoSub]="true"></observable-monitor>
-      <observable-monitor name="sign" [observable]="takeUntilSign$" [autoSub]="true"></observable-monitor>
-      <observable-monitor name="takeUntil" [observable]="takeUntil$" [autoSub]="true"></observable-monitor>
+      <app-observable-monitor name="interval" [observable]="interval$" [autoSub]="true"></app-observable-monitor>
+      <app-observable-monitor name="sign" [observable]="takeUntilSign$" [autoSub]="true"></app-observable-monitor>
+      <app-observable-monitor name="takeUntil" [observable]="takeUntil$" [autoSub]="true"></app-observable-monitor>
     </ng-container>
   </tab>
   <tab heading="Order">
     <ng-container *ngIf="tabs.tabs[2].active">
-      <observable-monitor name="take" [observable]="take$" [autoSub]="autoSub"></observable-monitor>
-      <observable-monitor name="delay before startWith" [observable]="delayFirst$"></observable-monitor>
-      <observable-monitor name="startWith before delay" [observable]="startWithFirst$"></observable-monitor>
+      <app-observable-monitor name="take" [observable]="take$" [autoSub]="autoSub"></app-observable-monitor>
+      <app-observable-monitor name="delay before startWith" [observable]="delayFirst$"></app-observable-monitor>
+      <app-observable-monitor name="startWith before delay" [observable]="startWithFirst$"></app-observable-monitor>
     </ng-container>
   </tab>
   <tab heading="Map">
     <ng-container *ngIf="tabs.tabs[3].active">
-      <observable-monitor name="interval" [observable]="interval$" [autoSub]="autoSub"></observable-monitor>
-      <observable-monitor name="map" [observable]="map$" [autoSub]="autoSub"></observable-monitor>
-      <observable-monitor name="mapTo" [observable]="mapTo$" [autoSub]="autoSub"></observable-monitor>
-      <observable-monitor name="pluck" [observable]="pluck$" [autoSub]="autoSub"></observable-monitor>
+      <app-observable-monitor name="interval" [observable]="interval$" [autoSub]="autoSub"></app-observable-monitor>
+      <app-observable-monitor name="map" [observable]="map$" [autoSub]="autoSub"></app-observable-monitor>
+      <app-observable-monitor name="mapTo" [observable]="mapTo$" [autoSub]="autoSub"></app-observable-monitor>
+      <app-observable-monitor name="pluck" [observable]="pluck$" [autoSub]="autoSub"></app-observable-monitor>
     </ng-container>
   </tab>
   <tab heading="Reduce">
     <ng-container *ngIf="tabs.tabs[4].active">
-      <observable-monitor name="take" [observable]="take$" [autoSub]="autoSub"></observable-monitor>
-      <observable-monitor name="reduce" [observable]="reduce$" [autoSub]="autoSub"></observable-monitor>
-      <observable-monitor name="scan" [observable]="scan$" [autoSub]="autoSub"></observable-monitor>
+      <app-observable-monitor name="take" [observable]="take$" [autoSub]="autoSub"></app-observable-monitor>
+      <app-observable-monitor name="reduce" [observable]="reduce$" [autoSub]="autoSub"></app-observable-monitor>
+      <app-observable-monitor name="scan" [observable]="scan$" [autoSub]="autoSub"></app-observable-monitor>
     </ng-container>
   </tab>
 </tabset>

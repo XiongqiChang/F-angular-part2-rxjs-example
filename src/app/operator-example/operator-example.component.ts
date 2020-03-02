@@ -1,8 +1,9 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { interval, Observable } from 'rxjs';
+import { delay, distinct, distinctUntilChanged, filter, map, mapTo, pluck, reduce, scan, startWith, take, takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'operator-example',
+  selector: 'app-operator-example',
   templateUrl: './operator-example.template.html',
   styleUrls: ['./operator-example.style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,27 +28,27 @@ export class OperatorExampleComponent {
   autoSub: boolean = false;
 
   constructor() {
-    this.interval$ = Observable.interval(1000);
-    this.take$ = this.interval$.take(5);
-    this.delay$ = this.take$.delay(1000);
-    this.startWith$ = this.take$.startWith(100);
-    this.distinct$ = this.interval$.distinct();
-    this.distinctUntilChange$ = this.interval$.distinctUntilChanged();
+    this.interval$ = interval(1000);
+    this.take$ = this.interval$.pipe(take(5));
+    this.delay$ = this.take$.pipe(delay(1000));
+    this.startWith$ = this.take$.pipe(startWith(100));
+    this.distinct$ = this.interval$.pipe(distinct());
+    this.distinctUntilChange$ = this.interval$.pipe(distinctUntilChanged());
 
-    this.takeUntilSign$ = Observable.create(observer => {
+    this.takeUntilSign$ = new Observable(observer => {
       setTimeout(() => observer.next(), 3456);
     });
-    this.takeUntil$ = this.interval$.takeUntil(this.takeUntilSign$);
+    this.takeUntil$ = this.interval$.pipe(takeUntil(this.takeUntilSign$));
 
-    this.delayFirst$ = this.take$.delay(1000).startWith(100);
-    this.startWithFirst$ = this.take$.startWith(100).delay(1000);
+    this.delayFirst$ = this.take$.pipe(delay(1000), startWith(100));
+    this.startWithFirst$ = this.take$.pipe(startWith(100), delay(1000));
 
-    this.map$ = this.interval$.map(i => ({ i: i }));
-    this.mapTo$ = this.interval$.mapTo('o');
-    this.pluck$ = this.map$.pluck('i');
-    this.filter$ = this.interval$.filter(i => i % 2 === 0);
+    this.map$ = this.interval$.pipe(map(i => ({ i: i })));
+    this.mapTo$ = this.interval$.pipe(mapTo('o'));
+    this.pluck$ = this.map$.pipe(pluck('i'));
+    this.filter$ = this.interval$.pipe(filter(i => i % 2 === 0));
 
-    this.reduce$ = this.take$.reduce((acc, cur) => acc + cur, 0);
-    this.scan$ = this.take$.scan((acc, cur) => acc + cur, 0);
+    this.reduce$ = this.take$.pipe(reduce((acc, cur) => acc + cur, 0));
+    this.scan$ = this.take$.pipe(scan((acc, cur) => acc + cur, 0));
   }
 }

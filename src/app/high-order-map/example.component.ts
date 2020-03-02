@@ -1,8 +1,9 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { concat, Observable, timer } from 'rxjs';
+import { concatMap, map, mapTo, mergeMap, switchMap, take } from 'rxjs/operators';
 
 @Component({
-  selector: 'high-order-map-example',
+  selector: 'app-high-order-map-example',
   templateUrl: './example.template.html',
   styleUrls: ['./example.style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -13,29 +14,29 @@ export class HighOrderMapExampleComponent {
   mergeMap$: Observable<number>;
   concatMap$: Observable<number>;
   switchMap$: Observable<number>;
-  tabs: any[];
+  tabs: {heading: string, observable?: Observable<any>}[];
 
   constructor() {
-    const observable1$ = Observable.timer(0, 2500).take(3).map(i => 10 + i);
-    const observable2$ = Observable.timer(0, 1500).take(5).map(i => 20 + i);
-    const observable3$ = Observable.timer(0, 1000).take(3).map(i => 30 + i);
+    const observable1$ = timer(0, 2500).pipe(take(3), map((i: number) => 10 + i));
+    const observable2$ = timer(0, 1500).pipe(take(5), map((i: number) => 20 + i));
+    const observable3$ = timer(0, 1000).pipe(take(3), map((i: number) => 30 + i));
     const observables = [null, observable1$, observable2$, observable3$];
-    this.timer$ = Observable.concat(
-      Observable.timer(1000).mapTo(1),
-      Observable.timer(3000).mapTo(2),
-      Observable.timer(2500).mapTo(3),
+    this.timer$ = concat(
+      timer(1000).pipe(mapTo(1)),
+      timer(3000).pipe(mapTo(2)),
+      timer(2500).pipe(mapTo(3)),
     );
 
-    this.map$ = this.timer$.map(i => observables[i]);
-    this.mergeMap$ = this.timer$.mergeMap(i => observables[i]);
-    this.concatMap$ = this.timer$.concatMap(i => observables[i]);
-    this.switchMap$ = this.timer$.switchMap(i => observables[i]);
+    this.map$ = this.timer$.pipe(map((i: number) => observables[i]));
+    this.mergeMap$ = this.timer$.pipe(mergeMap((i: number) => observables[i]));
+    this.concatMap$ = this.timer$.pipe(concatMap((i: number) => observables[i]));
+    this.switchMap$ = this.timer$.pipe(switchMap((i: number) => observables[i]));
     this.tabs = [
       { heading: 'None' },
       { heading: 'Map', observable: this.map$ },
       { heading: 'Merge', observable: this.mergeMap$ },
       { heading: 'Concat', observable: this.concatMap$ },
       { heading: 'Switch', observable: this.switchMap$ },
-    ]
+    ];
   }
 }

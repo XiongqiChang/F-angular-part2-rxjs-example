@@ -1,11 +1,8 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { AsyncSubject } from 'rxjs/AsyncSubject';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AsyncSubject, BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 
 @Component({
-  selector: 'subject-example',
+  selector: 'app-subject-example',
   templateUrl: './subject-example.template.html',
   styleUrls: ['./subject-example.style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

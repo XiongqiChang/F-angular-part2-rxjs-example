@@ -1,8 +1,9 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { combineLatest, concat, forkJoin, merge, Observable, timer } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 @Component({
-  selector: 'multiple-example',
+  selector: 'app-multiple-example',
   templateUrl: './example.template.html',
   styleUrls: ['./example.style.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,12 +20,12 @@ export class MultipleExampleComponent {
 
   constructor() {
     this.autoSub = true;
-    this.observableA$ = Observable.timer(0, 2000).map(i => String.fromCharCode(97 + i)).take(2);
-    this.observableB$ = Observable.timer(1000, 2000).take(3);
-    this.merge$ = Observable.merge(this.observableA$, this.observableB$);
-    this.combineLatest$ = Observable.combineLatest(this.observableA$, this.observableB$);
-    this.concat$ = Observable.concat(this.observableA$, this.observableB$);
-    this.forkJoin$ = Observable.forkJoin(this.observableA$, this.observableB$);
+    this.observableA$ = timer(0, 2000).pipe(map(i => String.fromCharCode(97 + i)), take(2));
+    this.observableB$ = timer(1000, 2000).pipe(take(3));
+    this.merge$ = merge(this.observableA$, this.observableB$);
+    this.combineLatest$ = combineLatest([this.observableA$, this.observableB$]);
+    this.concat$ = concat(this.observableA$, this.observableB$);
+    this.forkJoin$ = forkJoin([this.observableA$, this.observableB$]);
     this.tabs = [
       { heading: 'Merge', observable: this.merge$ },
       { heading: 'CombineLatest', observable: this.combineLatest$ },
