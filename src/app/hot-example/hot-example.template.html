@@ -5,5 +5,6 @@
       <app-observable-monitor name="1" [observable]="tab.observable"></app-observable-monitor>
       <app-observable-monitor name="2" [observable]="tab.observable"></app-observable-monitor>
     </ng-container>
+    <button *ngIf="tabSet.tabs[3].active" class="btn btn-primary" (click)="republish()">Republish</button>
   </tab>
 </tabset>

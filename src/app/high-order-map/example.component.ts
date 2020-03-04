@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { concat, Observable, timer } from 'rxjs';
-import { concatMap, map, mapTo, mergeMap, switchMap, take } from 'rxjs/operators';
+import { of } from 'rxjs/internal/observable/of';
+import { zip } from 'rxjs/internal/observable/zip';
+import { concatMap, map, mapTo, mergeMap, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-high-order-map-example',
@@ -9,17 +11,17 @@ import { concatMap, map, mapTo, mergeMap, switchMap, take } from 'rxjs/operators
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HighOrderMapExampleComponent {
-  timer$: Observable<number>;
-  map$: Observable<Observable<number>>;
-  mergeMap$: Observable<number>;
-  concatMap$: Observable<number>;
-  switchMap$: Observable<number>;
+  timer$: Observable<number | string>;
+  map$: Observable<Observable<number | string>>;
+  mergeMap$: Observable<number | string>;
+  concatMap$: Observable<number | string>;
+  switchMap$: Observable<number | string>;
   tabs: {heading: string, observable?: Observable<any>}[];
 
   constructor() {
-    const observable1$ = timer(0, 2500).pipe(take(3), map((i: number) => 10 + i));
-    const observable2$ = timer(0, 1500).pipe(take(5), map((i: number) => 20 + i));
-    const observable3$ = timer(0, 1000).pipe(take(3), map((i: number) => 30 + i));
+    const observable1$ = zip(timer(0, 2500), of('a', 'b', 'c')).pipe(map(([_, value]) => value));
+    const observable2$ = zip(timer(0, 1500), of(5, 6, 7, 8, 9)).pipe(map(([_, value]) => value));
+    const observable3$ = zip(timer(0, 1000), of('X', 'Y', 'Z')).pipe(map(([_, value]) => value));
     const observables = [null, observable1$, observable2$, observable3$];
     this.timer$ = concat(
       timer(1000).pipe(mapTo(1)),
@@ -32,7 +34,6 @@ export class HighOrderMapExampleComponent {
     this.concatMap$ = this.timer$.pipe(concatMap((i: number) => observables[i]));
     this.switchMap$ = this.timer$.pipe(switchMap((i: number) => observables[i]));
     this.tabs = [
-      { heading: 'None' },
       { heading: 'Map', observable: this.map$ },
       { heading: 'Merge', observable: this.mergeMap$ },
       { heading: 'Concat', observable: this.concatMap$ },

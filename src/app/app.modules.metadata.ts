@@ -1,4 +1,3 @@
-import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -19,7 +18,6 @@ export const AppModulesMetaData = {
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
     TabsModule.forRoot(),
     RouterModule.forRoot(ROUTES, { useHash: true }),
   ],

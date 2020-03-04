@@ -1,6 +1,19 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { interval, Observable } from 'rxjs';
-import { delay, distinct, distinctUntilChanged, filter, map, mapTo, pluck, reduce, scan, startWith, take, takeUntil } from 'rxjs/operators';
+import { interval, Observable, of, zip } from 'rxjs';
+import {
+  delay,
+  distinct,
+  distinctUntilChanged,
+  filter,
+  map,
+  mapTo,
+  pluck,
+  reduce,
+  scan,
+  startWith,
+  take,
+  takeUntil,
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-operator-example',
@@ -15,6 +28,7 @@ export class OperatorExampleComponent {
   startWith$: Observable<number>;
   delayFirst$: Observable<number>;
   startWithFirst$: Observable<number>;
+  circulateInterval$: Observable<number>;
   distinct$: Observable<number>;
   distinctUntilChange$: Observable<number>;
   takeUntil$: Observable<number>;
@@ -25,15 +39,17 @@ export class OperatorExampleComponent {
   filter$: Observable<number>;
   reduce$: Observable<number>;
   scan$: Observable<number>;
-  autoSub: boolean = false;
+  autoSub: boolean = true;
 
   constructor() {
     this.interval$ = interval(1000);
     this.take$ = this.interval$.pipe(take(5));
     this.delay$ = this.take$.pipe(delay(1000));
     this.startWith$ = this.take$.pipe(startWith(100));
-    this.distinct$ = this.interval$.pipe(distinct());
-    this.distinctUntilChange$ = this.interval$.pipe(distinctUntilChanged());
+
+    this.circulateInterval$ = zip(interval(1000), of(0, 1, 1, 2, 0, 2)).pipe(map(([_, value]) => value));
+    this.distinct$ = this.circulateInterval$.pipe(distinct());
+    this.distinctUntilChange$ = this.circulateInterval$.pipe(distinctUntilChanged());
 
     this.takeUntilSign$ = new Observable(observer => {
       setTimeout(() => observer.next(), 3456);

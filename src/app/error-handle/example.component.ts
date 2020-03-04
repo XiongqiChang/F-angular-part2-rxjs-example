@@ -17,23 +17,23 @@ export class ErrorHandleExampleComponent {
   mergeMapCaught$: Observable<any>;
 
   constructor() {
-    this.error$ = timer(2000).pipe(
+    this.error$ = timer(1500).pipe(
       map(() => {
-        throw Error('error');
+        throw Error('E');
       }),
-      startWith('start'),
+      startWith('S'),
     );
     const errorHandler = error => new Observable(observer => {
-      observer.next('error');
+      observer.next(error.message);
       setTimeout(() => {
-        observer.next('end');
+        observer.next('C');
         observer.complete();
       }, 500);
     });
 
     this.catch$ = this.error$.pipe(catchError(errorHandler));
     this.retry$ = this.error$.pipe(retry(2));
-    const timer$ = timer(1000, 2000).pipe(take(3));
+    const timer$ = timer(0, 3000).pipe(take(3));
     this.mergeMap$ = timer$.pipe(mergeMapTo(this.error$));
     this.catchMergeMapped$ = this.mergeMap$.pipe(catchError(errorHandler));
     this.mergeMapCaught$ = timer$.pipe(mergeMapTo(this.catch$));

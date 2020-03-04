@@ -9,22 +9,26 @@ import { publish, publishReplay, refCount, share, take } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HotExampleComponent {
-  cold$: Observable<any>;
-  share$: Observable<any>;
-  publish$: Observable<any>;
-  publishReplay$: Observable<any>;
+  cold$: Observable<number>;
+  share$: Observable<number>;
+  publish$: Observable<number>;
+  publishReplay$: Observable<number>;
   tabs: any[];
 
   constructor() {
     this.cold$ = interval(1500).pipe(take(3));
     this.share$ = this.cold$.pipe(share());
     this.publish$ = this.cold$.pipe(publish(), refCount());
-    this.publishReplay$ = this.cold$.pipe(publishReplay(), refCount());
+    this.publishReplay$ = this.cold$.pipe(publishReplay(1), refCount());
     this.tabs = [
       { heading: 'Cold', observable: this.cold$ },
       { heading: 'Share', observable: this.share$ },
       { heading: 'Publish', observable: this.publish$ },
       { heading: 'PublishReplay', observable: this.publishReplay$ },
     ];
+  }
+
+  republish() {
+    this.tabs[2].observable = this.cold$.pipe(publish(), refCount());
   }
 }

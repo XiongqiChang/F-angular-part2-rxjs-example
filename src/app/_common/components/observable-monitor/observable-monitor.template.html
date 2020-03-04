@@ -11,7 +11,7 @@
           [class.subscribe]="value.status === monitorType.SUBSCRIBE"
           [class.unsubscribe]="value.status === monitorType.UNSUBSCRIBE"
           [class.complete]="value.status === monitorType.COMPLETE"
-          [class.error]="value.status === monitorType.ERROR">.</span>
+          [class.error]="value.status === monitorType.ERROR"><i>.</i></span>
     <span class="value" *ngIf="value?.type === monitorType.VALUE">{{noContent ? '' : value.value}}</span>
     <span [ngClass]="['inner', 'level' + value.level]" *ngIf="value?.type === monitorType.INNER">
       <app-observable-monitor [observable]="value.value" [inner]="true"></app-observable-monitor>
