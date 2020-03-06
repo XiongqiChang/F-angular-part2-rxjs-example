@@ -13,7 +13,8 @@ import { ErrorHandleExampleComponent } from './error-handle/example.component';
 export const ROUTES: Routes = [
   {
     path: '',
-    component: ObservableExampleComponent,
+    redirectTo: 'observable',
+    pathMatch: 'full',
   },
   {
     path: 'observable',

@@ -1,3 +1,4 @@
+import { NavigationComponent } from './_common/components/navigation/navigation.component';
 import { NoContentComponent } from './no-content/no-content';
 // import { RxJSExampleComponent } from './rxjs-example/rxjs-example.component';
 import { MonitorControlComponent } from './_common/components/monitor-control/monitor-control.component';
@@ -23,4 +24,5 @@ export const COMPONENT_PROVIDERS = [
   HighOrderExampleComponent,
   HighOrderMapExampleComponent,
   ErrorHandleExampleComponent,
+  NavigationComponent,
 ];
